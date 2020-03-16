@@ -1,0 +1,17 @@
+<mat-card class="card-login">
+    <mat-form-field class="form-login" appearance="fill">
+        <mat-label>Login</mat-label>
+        <input matInput [(ngModel)]="user.login">
+    </mat-form-field><br/>
+
+    <mat-form-field class="form-login" appearance="fill">
+        <mat-label>Senha</mat-label>
+        <input matInput [(ngModel)]="user.password">
+    </mat-form-field><br/>
+
+    <button mat-button (click)="getUsers()">Entrar</button>
+</mat-card>
+
+<mat-card class="card-register">
+    <button mat-button (click)="register()">Registra-se</button>
+</mat-card>
