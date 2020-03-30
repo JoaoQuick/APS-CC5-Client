@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { UsersHttpService } from '../services/users-http.service'
+import { Component, OnInit, Input } from '@angular/core';
+import { FirebaseService } from '../services/firebase.service';
+import { Messaging } from '../interface/messagin';
 import { User } from '../interface/user';
 
 @Component({
@@ -9,43 +10,51 @@ import { User } from '../interface/user';
 })
 export class HomeComponent implements OnInit {
 
+  msg: Array<Messaging>;
+  messaging: string;
+  chatToUsers: Array<User> = [];
+  globalMessaging: Array<Messaging>;
+  showChat: boolean = false;
   constructor(
-    private _users: UsersHttpService
+    private _fb: FirebaseService
   ) { }
-
-  user: User = {
-    "login": '',
-    "password": '',
-    "authenticationToken": ''
+  users: Array<User>;
+  ngOnInit() {
+    this.messagignsChatGlobal();
+    this.getUsers();
   }
+
+  submitMessaging() {
+    this._fb.setChatGlobal(this.messaging);
+    this.messaging = '';
+  }
+
+  messagignsChatGlobal() {
+    this._fb.getChatGlobal().subscribe(
+      messaging => {
+        this.globalMessaging = messaging;
+      })
+    }
   
-
-  ngOnInit() { 
-  }
-
   getUsers() {
-    this._users.getUsers().subscribe(
-      (response) => {
-        console.log('Msg: ' + response);
-      }
+    this._fb.getUsers().subscribe(
+      users => this.users = users
     )
   }
 
-  register() {
-    if (this.user['login'] != '' && this.user['password'] != ''){
-      this._users.postUser(this.user).subscribe(
-        response => {
-          console.log('jonson')
-          console.log(response)
-          if (response != 'user already registered')
-            this.user.authenticationToken = response
-          else {
-            alert('Login já registrado')
-          }
-        },
-        error => console.log('erro: ' + error)
-      );
-    }
+  selectUsers(user: User) {
+    if (this.chatToUsers.length < 1) {
+      this.showChat = false;
+      this.chatToUsers.push(user);
+      this.showChat = true;
+    } 
+    else {
+      this.showChat = false;
+      this.chatToUsers.splice(0,1);
+      this.chatToUsers.push(user);
+      this.showChat = true;
+    };
+   
+    console.log(this.chatToUsers)
   }
-
 }

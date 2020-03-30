@@ -1,0 +1,48 @@
+<div class="alert {{alert.type}}" role="alert" *ngIf="alert">
+    {{alert.msg}}
+</div>
+
+<mat-card class="card-login">
+    <mat-form-field class="form-login" appearance="fill">
+        <mat-label>Login</mat-label>
+        <input matInput [(ngModel)]="user.login">
+    </mat-form-field><br/>
+
+    <mat-form-field class="form-login" appearance="fill">
+        <mat-label>Senha</mat-label>
+        <input matInput [(ngModel)]="user.password">
+    </mat-form-field><br/>
+
+    <button mat-button (click)="userAccess()">Entrar</button>
+</mat-card>
+
+<mat-card class="card-register">
+    <div>
+        <mat-form-field style="width: 100%;" appearance="fill" >
+            <mat-label>Login</mat-label>
+            <input matInput [(ngModel)]="registerUser.login">
+        </mat-form-field><br/>
+
+        <mat-form-field style="width: 100%;" appearance="fill">
+            <mat-label>Senha</mat-label>
+            <input matInput [(ngModel)]="registerUser.password">
+        </mat-form-field><br/>
+
+        <mat-form-field style="width: 48%;" appearance="fill">
+            <mat-label>Nome</mat-label>
+            <input matInput [(ngModel)]="registerUser.nickname">
+        </mat-form-field>
+
+        <mat-form-field style="width: 48%; margin-left: 4%;" appearance="fill">
+            <mat-label>Email</mat-label>
+            <input matInput [(ngModel)]="registerUser.email">
+        </mat-form-field><br/>
+    </div>
+    <button mat-button (click)="register()">Registrar-se</button>
+</mat-card>
+
+<div *ngIf="items"> 
+    {{items.login}}
+</div>
+
+

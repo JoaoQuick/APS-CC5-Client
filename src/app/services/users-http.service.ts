@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { User } from  '../interface/user';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpHandler, HttpHeaders } from '@angular/common/http';
 import { Observable, Subscriber } from 'rxjs';
-import { ConstantsService } from '../services/constants.service'
+import { ConstantsService } from '../services/constants.service';
+import { Messaging } from '../interface/messagin';
 
 @Injectable({
   providedIn: 'root'
@@ -14,29 +15,59 @@ export class UsersHttpService {
     private _ConstantsService: ConstantsService
   ) { }
 
-  getUsers() {
-    return new Observable<Array<User>>(
-      subscriber => {
-        const url = this._ConstantsService.getUrlUser() + '/user';
+  getUsers(): Observable<Array<string>> {
+    return new Observable<Array<string>>(subscriber => {
+        const url = this._ConstantsService.getUrl() + '/user';
         // const url = 'https://jsonplaceholder.typicode.com/users';
         this._http.get(url).subscribe(
-          (response) => subscriber.next(response as Array<User>),
+          response => {
+            console.log(response)
+            subscriber.next(response as Array<string>)},
           (error) => subscriber.next(error)           
         )
       }
     )
   };
 
-  postUser(user: User): Observable<string> {
+  registerUser(user: User): Observable<string> {
     return new Observable<string>(subscriber => {
-      const url = this._ConstantsService.getUrlUser() + '/user' 
+      const url = this._ConstantsService.getUrl() + '/user' 
       this._http.post(url, user, {responseType: 'text'}).subscribe(
-        (response) => {
-          subscriber.next(response)
-        },
-        // (error) => console.log('error: ' + error)
+        response => subscriber.next(response),
+        erro => subscriber.next(erro as string)
       );
     });
   }
-  
+
+  checkUserAuthentication(user: User): Observable<string> {
+    return new Observable<string>(subscribe => {
+      const url = this._ConstantsService.getUrl() + '/user-access';
+      const ckeckUser = new HttpHeaders({
+        'login': user.login,
+        'password': user.password
+      })
+      this._http.get(url, {headers: ckeckUser}).subscribe(
+        response => {
+          console.log(response)
+          subscribe.next(response as string)},
+        erro => subscribe.next(erro)
+        // user invalid
+      )
+    })
+  }
+
+  chatToken(name: string): Observable<Object> {
+    return new Observable<Object>(subscriber => {
+      const url = this._ConstantsService.getUrl() + '/user-chats';
+      const users = new HttpHeaders({
+        'user_1': this._ConstantsService.getUser()['login'],
+        'user_2': name
+      })
+      this._http.get(url, {headers: users}).subscribe(
+        response => subscriber.next(response),
+        error => subscriber.next(error)
+      )
+
+    })
+  }
 }

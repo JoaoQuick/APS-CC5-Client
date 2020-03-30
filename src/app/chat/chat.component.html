@@ -1,0 +1,35 @@
+<mat-card class="example-card">
+  <p>oi</p>
+</mat-card>
+
+<mat-card class="card-chat">
+  <mat-card class="card-headers">
+    <h6 class="title-global" style="text-align: center;"><b>Geral</b></h6>
+  </mat-card>
+
+  <mat-card-content>
+    <cdk-virtual-scroll-viewport itemSize="50" class="scroll">
+      <div *ngFor="let msg of globalMessaging; let i = index" class="list-msg">
+        <div class="card-msg-global">
+          <mat-card class="card-msg">
+              <b>{{globalMessaging[i].login}}</b>
+              <mat-card-content>
+                  <p style="margin-right: 10%;">{{globalMessaging[i].msg}}</p>
+              </mat-card-content>
+          </mat-card>
+          <mat-card-actions>
+              {{globalMessaging[i].datetime.seconds*1000 | date: 'HH:mm'}}
+          </mat-card-actions>
+        </div>
+      </div>
+    </cdk-virtual-scroll-viewport>
+
+    <hr/>
+    <mat-form-field appearance="outline" class="form-chat">
+      <mat-label>Mensagem</mat-label>
+      <textarea matInput class="textarea-global" [(ngModel)]="messaging" 
+          (keydown.enter)="submitMessaging()"
+          class="input-chat" mdInput ></textarea>
+    </mat-form-field>
+</mat-card-content>
+</mat-card>

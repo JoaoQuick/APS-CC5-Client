@@ -1,0 +1,27 @@
+.example-card {
+    width: 100%;
+    height: 30%;
+}
+
+.card-chat {
+    width: 100%;
+    height: 70%;
+
+    .card-headers {
+        background-color: #73d99a;
+    }
+    
+    .scroll {
+        height: 25em!important;
+        margin-top: 2%;
+    }
+    .list-msg {
+        margin-right: 4%;
+    }
+    .form-chat {
+        width: 100%;
+        .textarea-global {
+            border: solid 2px green!important;
+        }
+    }
+}

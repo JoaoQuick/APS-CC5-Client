@@ -1,0 +1,19 @@
+{
+  "hosting": [
+    {
+      "target": "client-aps",
+      "public": "dist/client-aps",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ]
+    }
+  ]
+}

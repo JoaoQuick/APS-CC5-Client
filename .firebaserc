@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "aps-cc5-communication": {
+      "hosting": {
+        "client-aps": [
+          "aps-cc5-communication"
+        ]
+      }
+    }
+  }
+}

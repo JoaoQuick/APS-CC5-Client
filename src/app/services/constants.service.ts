@@ -1,19 +1,43 @@
 import { Injectable } from '@angular/core';
+import { User } from '../interface/user';
+import { Router } from '@angular/router';
+
+import {MatPaginator} from '@angular/material/paginator';
+import {MatTableDataSource} from '@angular/material/table';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ConstantsService {
 
-  constructor() { }
+  constructor(
+    private router: Router
+  ) { }
 
-  private urlUser: string = 'https://8c6bbc01.ngrok.io';
+  private url: string = 'http://127.0.0.1:8080';
+  private user: User = {
+    login: 'joao',
+    password: 'root12'
+  };
 
-  getUrlUser(): string {
-    return this.urlUser;
+  getUrl(): string {
+    return this.url;
   }
 
   setUrl(newUrl: string): void {
-    this.urlUser = newUrl;
+    this.url = newUrl;
+  }
+
+  ckeckUser(): void {
+    if (!this.user)
+      this.router.navigate(['/login'])
+  }
+
+  getUser(): User {
+    return this.user
+  }
+
+  setUser(user) {
+    this.user = user;
   }
 }
