@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import 'firebase/firestore';
+// import 'firebase/firestore';
+import { auth } from 'firebase';
 import { User } from '../interface/user';
 import { UsersHttpService } from '../services/users-http.service'
 import { ConstantsService } from '../services/constants.service';
@@ -18,14 +19,35 @@ export class FirebaseService {
     private _db: UsersHttpService,
     private _ConstantsService: ConstantsService,
   ) { }
-
+  
+  userAccess(email: string, password: string): Observable<User> | Observable<Object> {
+    return new Observable<Object>(subscriber => { 
+      auth().signInWithEmailAndPassword(email, password)
+      .then(
+        response => { 
+          if (response['user']) {
+            subscriber.next({
+              email: response['user']['email'],
+              nickname: response['user']['displayName'],
+              token: response['user']['uid']
+            } as User );
+          }
+          else subscriber.next(response)
+        }
+      )
+      .catch(error => { subscriber.next({'error': error['message']} as Object)
+        
+      })
+    })
+  }
+ 
   startedChat(user: string){
     this._db.chatToken(user).subscribe(
       response => {
         this._fb.collection('chats').doc(
           response['chat'] +'/conversations/' + this._fb.createId()).set(
             {
-            login: this._ConstantsService.getUser()['login'],
+            email: this._ConstantsService.getUser()['email'],
             msg: "Salvee",
             "datetime": firestore.Timestamp
           })
@@ -34,16 +56,41 @@ export class FirebaseService {
     );
   }
 
-  sendMessageToUser(login: string): Observable<Object> {
+  sendMessageToUser(email: string): Observable<Object> {
     return new Observable<Object>(subscriber => {
-      this._db.chatToken(login).subscribe(
+      this._db.chatToken(email).subscribe(
         tokenChat => {
           this._fb.collection('chats/'+ tokenChat['chat']+'/conversations').valueChanges().subscribe(
-            response => subscriber.next(tokenChat) 
+            () => subscriber.next(tokenChat) 
           );
         }
       );
     });
+  }
+
+  getConversations(tokenChat: string): Observable<{msgs: Array<Messaging>, token: string}> {
+    return new Observable<{msgs: Array<Messaging>, token: string}>(subscriber => {
+      this._fb.collection('chats/'+ tokenChat +'/conversations', ref => {
+        let query : firebase.firestore.CollectionReference | firebase.firestore.Query = ref;
+        query = query.orderBy('datetime')
+        return query
+      }).valueChanges()
+        .subscribe(
+          response => subscriber.next({ msgs: response as Array<Messaging>, token: tokenChat}),
+          error => console.log(error)
+        );
+      }
+    );
+  }
+
+  setConversations(tokenChat: string, msg: string) {
+    this._fb.collection('chats/'+ tokenChat +'/conversations').doc(
+        this._fb.createId()).set({
+          email: this._ConstantsService.getUser()['email'],
+          nickname: this._ConstantsService.getUser()['nickname'],
+          msg: msg,
+          datetime: firestore.Timestamp.now()
+        });
   }
 
   getChatGlobal(): Observable<Array<Messaging>> {
@@ -55,7 +102,8 @@ export class FirebaseService {
       }).valueChanges()
         .subscribe(
           response => subscriber.next(response as Array<Messaging>),
-          error => console.log(error));
+          error => console.log(error)
+        );
       }
     );
   }
@@ -63,20 +111,23 @@ export class FirebaseService {
   setChatGlobal(msg: string) {
     this._fb.collection('chats/global_KxgIWLs7yQ105bOxpq9j/conversations').doc(
         this._fb.createId()).set({
-          login: this._ConstantsService.getUser()['login'],
+          email: this._ConstantsService.getUser()['email'],
+          nickname: this._ConstantsService.getUser()['nickname'],
           msg: msg,
           "datetime": firestore.Timestamp.now()
         });
   }
 
-  getUsers(): Observable<Array<User>>{
+  getUsers(): Observable<Array<User>> {
     return new Observable<Array<User>>(subscriber => {
       this._fb.collection('users').valueChanges().subscribe(
         users => {
           let name_users: Array<User> = [];
-          users.forEach(
-            user => name_users.push({'login': user['login'], 'nickname': user['nickname']}));
-          subscriber.next(name_users)
+          users.forEach(user => {
+            if (user['email'] != this._ConstantsService.getUser()['email'])
+              name_users.push(user)
+          });
+          subscriber.next(name_users);
         },
         error => console.log('erro: ' + error)
       );

@@ -1,7 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { FirebaseService } from '../services/firebase.service';
-import { Messaging } from '../interface/messagin';
-import { User } from '../interface/user';
+import { Component, OnInit, Input }    from '@angular/core';
+import { FirebaseService }             from '../services/firebase.service';
+import { Messaging }                   from '../interface/messagin';
+import { User }                        from '../interface/user';
+import { EventsCommunicationsService } from '../services/events-communications.service';
+import { ConstantsService }             from '../services/constants.service';
 
 @Component({
   selector: 'app-home',
@@ -15,11 +17,16 @@ export class HomeComponent implements OnInit {
   chatToUsers: Array<User> = [];
   globalMessaging: Array<Messaging>;
   showChat: boolean = false;
-  constructor(
-    private _fb: FirebaseService
-  ) { }
   users: Array<User>;
+
+  constructor(
+    private _fb: FirebaseService,
+    private _eventComunicarion: EventsCommunicationsService,
+    private _ConstantsService: ConstantsService
+  ) { }
+
   ngOnInit() {
+    this._ConstantsService.ckeckUser();
     this.messagignsChatGlobal();
     this.getUsers();
   }
@@ -43,18 +50,7 @@ export class HomeComponent implements OnInit {
   }
 
   selectUsers(user: User) {
-    if (this.chatToUsers.length < 1) {
-      this.showChat = false;
-      this.chatToUsers.push(user);
-      this.showChat = true;
-    } 
-    else {
-      this.showChat = false;
-      this.chatToUsers.splice(0,1);
-      this.chatToUsers.push(user);
-      this.showChat = true;
-    };
-   
-    console.log(this.chatToUsers)
+    this.showChat = true;
+    this._eventComunicarion.initConversationToNewUser.emit(user);
   }
 }

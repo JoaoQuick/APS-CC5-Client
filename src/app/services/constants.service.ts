@@ -15,10 +15,7 @@ export class ConstantsService {
   ) { }
 
   private url: string = 'http://127.0.0.1:8080';
-  private user: User = {
-    login: 'joao',
-    password: 'root12'
-  };
+  private user: User;
 
   getUrl(): string {
     return this.url;
@@ -29,15 +26,15 @@ export class ConstantsService {
   }
 
   ckeckUser(): void {
-    if (!this.user)
-      this.router.navigate(['/login'])
+    if (!this.user || !this.user.token)
+      this.router.navigate(['/login']);
   }
 
   getUser(): User {
-    return this.user
+    return this.user;
   }
 
-  setUser(user) {
+  setUser(user: User) {
     this.user = user;
   }
 }

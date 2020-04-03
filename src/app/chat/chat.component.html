@@ -1,24 +1,27 @@
 <mat-card class="example-card">
-  <p>oi</p>
 </mat-card>
 
-<mat-card class="card-chat">
-  <mat-card class="card-headers">
-    <h6 class="title-global" style="text-align: center;"><b>Geral</b></h6>
-  </mat-card>
+<mat-card class="card-chat" *ngIf="chatToUsers">
 
+  <mat-card class="card-headers"> 
+    <mat-card-header>
+      <div mat-card-avatar class="header-image-user"></div>
+      <h5 class="title-chat">{{chatToUsers.nickname}}</h5>
+    </mat-card-header>
+  </mat-card>
+  
   <mat-card-content>
     <cdk-virtual-scroll-viewport itemSize="50" class="scroll">
-      <div *ngFor="let msg of globalMessaging; let i = index" class="list-msg">
+      <div *ngFor="let msg of msgs; let i = index" class="list-msg">
         <div class="card-msg-global">
           <mat-card class="card-msg">
-              <b>{{globalMessaging[i].login}}</b>
+              <b>{{msgs[i].nickname}}</b>
               <mat-card-content>
-                  <p style="margin-right: 10%;">{{globalMessaging[i].msg}}</p>
+                  <p style="margin-right: 10%;">{{msgs[i].msg}}</p>
               </mat-card-content>
           </mat-card>
           <mat-card-actions>
-              {{globalMessaging[i].datetime.seconds*1000 | date: 'HH:mm'}}
+              <p style="margin-left: 2%;">{{msgs[i].datetime.seconds*1000 | date: 'HH:mm'}}</p>
           </mat-card-actions>
         </div>
       </div>

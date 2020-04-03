@@ -2,10 +2,10 @@
     {{alert.msg}}
 </div>
 
-<mat-card class="card-login">
+<mat-card class="card-login" *ngIf="loginOrAccess">
     <mat-form-field class="form-login" appearance="fill">
-        <mat-label>Login</mat-label>
-        <input matInput [(ngModel)]="user.login">
+        <mat-label>Email</mat-label>
+        <input matInput [(ngModel)]="user.email">
     </mat-form-field><br/>
 
     <mat-form-field class="form-login" appearance="fill">
@@ -17,10 +17,15 @@
 </mat-card>
 
 <mat-card class="card-register">
-    <div>
+    <div *ngIf="!loginOrAccess">
+        <mat-card-header>
+            <div mat-card-avatar class="icon-return" type="button" (click)="register('true')"></div>
+            <h3 class="title-login">Preencha os dados para cadastrar-se</h3>
+        </mat-card-header>
+        <br>
         <mat-form-field style="width: 100%;" appearance="fill" >
-            <mat-label>Login</mat-label>
-            <input matInput [(ngModel)]="registerUser.login">
+            <mat-label>Email</mat-label>
+            <input matInput [(ngModel)]="registerUser.email">
         </mat-form-field><br/>
 
         <mat-form-field style="width: 100%;" appearance="fill">
@@ -34,8 +39,8 @@
         </mat-form-field>
 
         <mat-form-field style="width: 48%; margin-left: 4%;" appearance="fill">
-            <mat-label>Email</mat-label>
-            <input matInput [(ngModel)]="registerUser.email">
+            <mat-label>Telefone</mat-label>
+            <input matInput [(ngModel)]="registerUser.phone">
         </mat-form-field><br/>
     </div>
     <button mat-button (click)="register()">Registrar-se</button>

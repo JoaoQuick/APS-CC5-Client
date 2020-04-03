@@ -29,21 +29,22 @@ export class UsersHttpService {
     )
   };
 
-  registerUser(user: User): Observable<string> {
-    return new Observable<string>(subscriber => {
+  registerUser(user: User): Observable<{status: string, token: string}> {
+    return new Observable<{status: string, token: string}>(subscriber => {
       const url = this._ConstantsService.getUrl() + '/user' 
-      this._http.post(url, user, {responseType: 'text'}).subscribe(
-        response => subscriber.next(response),
-        erro => subscriber.next(erro as string)
+      this._http.post(url, user).subscribe(
+        response => subscriber.next(response as {status: string, token: string}),
+        erro => subscriber.next(erro as {status: string, token: string})
       );
     });
   }
+  // return string api: param: {responseType: 'text'}
 
   checkUserAuthentication(user: User): Observable<string> {
     return new Observable<string>(subscribe => {
       const url = this._ConstantsService.getUrl() + '/user-access';
       const ckeckUser = new HttpHeaders({
-        'login': user.login,
+        'email': user.email,
         'password': user.password
       })
       this._http.get(url, {headers: ckeckUser}).subscribe(
@@ -56,18 +57,17 @@ export class UsersHttpService {
     })
   }
 
-  chatToken(name: string): Observable<Object> {
+  chatToken(email: string): Observable<Object> {
     return new Observable<Object>(subscriber => {
       const url = this._ConstantsService.getUrl() + '/user-chats';
       const users = new HttpHeaders({
-        'user_1': this._ConstantsService.getUser()['login'],
-        'user_2': name
+        'user_1': this._ConstantsService.getUser()['email'],
+        'user_2': email
       })
       this._http.get(url, {headers: users}).subscribe(
         response => subscriber.next(response),
         error => subscriber.next(error)
-      )
-
-    })
+      );
+    });
   }
 }
