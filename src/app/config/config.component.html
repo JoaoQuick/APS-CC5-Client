@@ -1,0 +1,12 @@
+<div class="alert {{alert.type}}" role="alert" *ngIf="alert">
+    {{alert.msg}}
+</div>
+
+<mat-card class="card-login">
+    <mat-form-field class="form-login" appearance="fill">
+        <mat-label>url da API</mat-label>
+        <input matInput [(ngModel)]="url">
+    </mat-form-field><br/>
+
+    <button mat-button (click)="setUrl()">Salvar</button>
+</mat-card>

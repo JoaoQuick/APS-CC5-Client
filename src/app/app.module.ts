@@ -30,11 +30,13 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 import { TableVirtualScrollModule } from 'ng-table-virtual-scroll';
 import { ChatComponent } from './chat/chat.component';
 import { ChatGlobalComponent } from './chat-global/chat-global.component';
+import { ConfigComponent } from './config/config.component';
 
 const root = [
   { path: '', redirectTo: '/home', pathMatch: 'full'},
   { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'api-config', component: ConfigComponent },
 ]
 
 @NgModule({
@@ -43,7 +45,8 @@ const root = [
     HomeComponent,
     LoginComponent,
     ChatComponent,
-    ChatGlobalComponent
+    ChatGlobalComponent,
+    ConfigComponent
   ],
   imports: [
     BrowserModule,

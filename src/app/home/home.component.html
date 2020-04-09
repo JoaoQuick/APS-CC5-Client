@@ -27,7 +27,7 @@
                     <h6 class="title-global"><b>Geral</b></h6></mat-card>
                 <mat-card class="card-chat-global">
                     <mat-card-content>
-                        <cdk-virtual-scroll-viewport itemSize="50" class="scroll">
+                        <cdk-virtual-scroll-viewport [ngStyle]="{'height.px': heightScroll}" itemSize="50" class="scroll">
                             <div *ngFor="let msg of globalMessaging; let i = index" class="list-msg">
                                 <div class="card-msg-global">
                                         <mat-card class="card-msg">
@@ -37,21 +37,12 @@
                                             </mat-card-content>
                                         </mat-card>
                                         <mat-card-actions>
-                                            {{globalMessaging[i].datetime.seconds*1000 | date: 'HH:mm'}}
+                                            <p style="margin-left: 2%;">
+                                                {{globalMessaging[i].datetime.seconds*1000 | date: 'HH:mm'}}
+                                            </p>
                                         </mat-card-actions>
                                 </div>
                             </div>
-                            
-                            <!-- <mat-card class="card-msg">
-                                                    <div style="text-align: right; margin-right: 2%;"><b>{{name}}</b></div>
-                                                    <mat-card-content>
-                                                        <p style="margin-left: 10%;">ojisanfinifs ofj isafnpfsfnisan fpfaf as asf asfsaf asfasfasf as</p>
-                                                    </mat-card-content>
-                                                </mat-card>
-                                                <mat-card-actions>
-                                                    <div style="text-align: right;">19:14</div>
-                                                
-                                                </mat-card-actions> -->
                         </cdk-virtual-scroll-viewport>
                         <hr/>
                         <mat-form-field appearance="outline" class="form-chat">
@@ -66,3 +57,29 @@
         </div>
     </div>
 </div>
+
+<!-- <cdk-virtual-scroll-viewport itemSize="50" class="scroll">
+  <div *ngFor="let msg of globalMessaging; let i = index" class="list-msg">
+      <div class="card-msg-global">
+              <mat-card  [ngClass]="{'card-msg': msgs[i].email != myUser.email,
+                                      'card-msg-my-user': msgs[i].email == myUser.email}">
+                  <b [ngClass]="{'title-msg-my-user': msgs[i].email == myUser.email}"
+                      *ngIf="msgs[i].email != myUser.email">
+                      {{globalMessaging[i].nickname}}
+                  </b>
+                  <mat-card-content>
+                      <p [ngClass]="{'text-msg-my-user': msgs[i].email == myUser.email,
+                                      'text-msg': msgs[i].email != myUser.email}">
+                          {{globalMessaging[i].msg}}
+                      </p>
+                  </mat-card-content>
+              </mat-card>
+              <mat-card-actions>
+                  <p [ngClass]="{'header-hours-my-user': msgs[i].email == myUser.email,
+                                  'header-hours': msgs[i].email != myUser.email}">
+                      {{globalMessaging[i].datetime.seconds*1000 | date: 'HH:mm'}}
+                  </p>
+              </mat-card-actions>
+      </div>
+  </div>
+</cdk-virtual-scroll-viewport> -->

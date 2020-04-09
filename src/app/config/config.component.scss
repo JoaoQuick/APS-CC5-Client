@@ -1,0 +1,26 @@
+.card-login {
+    margin-left: 20%;
+    margin-top: 5%;
+    margin-right: 20%;
+
+    .form-login {
+        border-radius: 3px;
+        width: 100%;
+        text-align: left;
+    }
+
+    .mat-button {
+        background-color: #678299;
+        width: 30%;
+        text-align: center;
+    }
+}
+
+.alert {
+    z-index: 1;
+    margin-left: 10%;
+    margin-right: 10%;
+    text-align: center;
+    transition: opacity 0.5s;
+    position: relative;
+}

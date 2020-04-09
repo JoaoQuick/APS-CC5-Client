@@ -10,7 +10,7 @@
 
     <mat-form-field class="form-login" appearance="fill">
         <mat-label>Senha</mat-label>
-        <input matInput [(ngModel)]="user.password">
+        <input matInput [(ngModel)]="user.password" type="password">
     </mat-form-field><br/>
 
     <button mat-button (click)="userAccess()">Entrar</button>
@@ -30,7 +30,7 @@
 
         <mat-form-field style="width: 100%;" appearance="fill">
             <mat-label>Senha</mat-label>
-            <input matInput [(ngModel)]="registerUser.password">
+            <input matInput [(ngModel)]="registerUser.password" type="password">
         </mat-form-field><br/>
 
         <mat-form-field style="width: 48%;" appearance="fill">

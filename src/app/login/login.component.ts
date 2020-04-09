@@ -30,7 +30,11 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private _fb: FirebaseService,
     private _ConstantsService: ConstantsService
-  ) { }
+  ) {
+    this._fb.getUrlApiDatabase().subscribe(
+      url => this._ConstantsService.setUrl(url['url'])
+    );
+   }
 
   ngOnInit() {
   }
@@ -50,7 +54,6 @@ export class LoginComponent implements OnInit {
   userAccess() {
     this._fb.userAccess(this.user['email'], this.user['password']).subscribe(
       response => {
-        console.log(response)
         if (response['email'] && response['token']) {
           this._ConstantsService.setUser(response as User);
           this.showAlert('Login bem sucedido', 'alert-success');
@@ -76,7 +79,6 @@ export class LoginComponent implements OnInit {
     if (this.registerUser['email'] != '' && this.registerUser['password'] != '' && (
           this.registerUser['nickname']) != '') {
             this._users.registerUser(this.registerUser).subscribe(response => {
-                console.log(response);
                 if (response['status'] != 'error') {
                     this._ConstantsService.setUser({
                       email: this.registerUser.email,

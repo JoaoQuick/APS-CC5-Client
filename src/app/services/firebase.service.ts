@@ -68,6 +68,14 @@ export class FirebaseService {
     });
   }
 
+  getUrlApiDatabase(): Observable<{url: string}> {
+    return new Observable<{url: string}>(subscriber => {
+      this._fb.collection('parameters').valueChanges().subscribe(
+        response => subscriber.next({url: response[0]['url']})
+      );
+    });
+  }
+
   getConversations(tokenChat: string): Observable<{msgs: Array<Messaging>, token: string}> {
     return new Observable<{msgs: Array<Messaging>, token: string}>(subscriber => {
       this._fb.collection('chats/'+ tokenChat +'/conversations', ref => {
@@ -123,7 +131,7 @@ export class FirebaseService {
       this._fb.collection('users').valueChanges().subscribe(
         users => {
           let name_users: Array<User> = [];
-          users.forEach(user => {
+          users.forEach((user: User) => {
             if (user['email'] != this._ConstantsService.getUser()['email'])
               name_users.push(user)
           });

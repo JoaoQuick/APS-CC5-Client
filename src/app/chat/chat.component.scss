@@ -23,8 +23,40 @@
     }
     
     .scroll {
-        height: 25em!important;
+        // height: 25em!important;
         margin-top: 2%;
+
+        .card-msg {
+            background-color: #e4e6e3;
+            margin-right: 10%;
+            width: auto;
+        }
+
+        .card-msg-my-user {
+            background-color: #afff91;;
+            margin-left: 10%;
+        }
+
+        .title-msg-my-user {
+            text-align: right;
+        }
+
+        .header-hours {
+            margin-left: 2%;
+        }
+
+        .header-hours-my-user {
+            text-align: right;
+            margin-right: 2%;
+        }
+
+        .text-msg-my-user {
+            text-align: left;
+        }
+
+        // .text-msg {
+        //     margin-right: 10%;
+        // }
     }
 
     .list-msg {

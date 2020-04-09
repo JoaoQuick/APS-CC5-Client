@@ -18,8 +18,10 @@
     }
     .card-chat-global {
         background-color: #fff8c7;
+        height: 100%;
         .scroll {
-            height: 40em!important;
+            // height: 40em!important;
+            color:blue($color: #000000)
         }
         .list-msg {
             margin-right: 4%;
@@ -34,7 +36,7 @@
 }
 
 .scroll {
-    height: 48em!important;
+    height: 48em;
     margin-top: 2%;
 
     // transform:rotate(-90deg) translateY(-100px);
