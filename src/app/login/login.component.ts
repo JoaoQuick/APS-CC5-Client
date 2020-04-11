@@ -31,9 +31,9 @@ export class LoginComponent implements OnInit {
     private _fb: FirebaseService,
     private _ConstantsService: ConstantsService
   ) {
-    this._fb.getUrlApiDatabase().subscribe(
-      url => this._ConstantsService.setUrl(url['url'])
-    );
+    // this._fb.getUrlApiDatabase().subscribe(
+    //   url => this._ConstantsService.setUrl(url['url'])
+    // );
    }
 
   ngOnInit() {
@@ -103,6 +103,10 @@ export class LoginComponent implements OnInit {
     let message: string;
     if (status == 'error') {
       switch (msg) {
+        case 'format_email_invalid': {
+          message = 'Formato do e-mail invalido!';
+          break;
+        }
         case 'user_alread_created': {
           message = 'Outra conta já está utilizando o e-mail' + email + '.';
           break;
@@ -123,7 +127,7 @@ export class LoginComponent implements OnInit {
           message = 'Muitas tentativas de login sem êxito. Por favor, tente novamente mais tarde.';
           break;
         }
-        case 'Invalid password string. Password must be a string at least 6 characters long.': {
+        case 'password_least_six_characters': {
           message = 'Senha deve possuir no mínimo 6 caracteres';
           break;
         }

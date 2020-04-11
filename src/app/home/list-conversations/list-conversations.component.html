@@ -1,0 +1,12 @@
+<mat-card>
+    <cdk-virtual-scroll-viewport [ngStyle]="{'height.px': heightScroll}" itemSize="50" class="scroll">
+        <div *ngFor="let register of registerConversations" style="margin-top: 10%;">
+            <div class="list-users" type="button" (click)="selectUsers(register)">
+                <img mat-card-avatar class="example-header-image">
+                <mat-card-title>{{register.user}}</mat-card-title>
+                <mat-card-subtitle >Really, they are!</mat-card-subtitle>
+            </div>
+            <hr/>
+        </div>
+    </cdk-virtual-scroll-viewport>
+</mat-card>

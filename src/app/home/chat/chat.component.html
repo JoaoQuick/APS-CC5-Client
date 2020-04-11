@@ -1,0 +1,41 @@
+<div class="example-card"></div>
+<!-- Cabeçalho -->
+<mat-card class="card-headers" *ngIf="chatToUsers"> 
+  <mat-card-header>
+    <div mat-card-avatar class="header-image-user"></div>
+    <h5 class="title-chat">{{chatToUsers.nickname}}</h5>
+  </mat-card-header>
+</mat-card>
+
+<mat-card class="card-chat" *ngIf="chatToUsers">
+  <!-- Mensagens -->
+    <cdk-virtual-scroll-viewport [ngStyle]="{'height.px': heightScroll}" itemSize="50" class="scroll">
+      <div *ngFor="let msg of msgs; let i = index" class="list-msg">
+        <div class="card-msg-global">
+          <mat-card [ngClass]="{'card-msg': msgs[i].email != myUser.email, 'card-msg-my-user': msgs[i].email == myUser.email}">
+            <div *ngIf="msgs[i].email != myUser.email" [ngClass]="{'title-msg-my-user': msgs[i].email == myUser.email}">
+              <b>{{msgs[i].nickname}}</b>
+            </div>
+            <mat-card-content>
+                <p [ngClass]="{'text-msg-my-user': msgs[i].email == myUser.email, 'text-msg': msgs[i].email != myUser.email}">
+                  {{msgs[i].msg}}
+                </p>
+            </mat-card-content>
+          </mat-card>
+          <p [ngClass]="{'header-hours-my-user': msgs[i].email == myUser.email, 'header-hours': msgs[i].email != myUser.email}">
+            {{msgs[i].datetime.seconds*1000 | date: 'HH:mm'}}
+          </p>
+        </div>
+      </div>
+    </cdk-virtual-scroll-viewport>
+    <!-- Input -->
+    <hr/>
+    <mat-form-field appearance="outline" class="form-chat">
+      <mat-label>Mensagem</mat-label>
+      <textarea matInput class="textarea-global" [(ngModel)]="messaging" 
+          (keydown.enter)="submitMessaging()"
+          class="input-chat" mdInput ></textarea>
+    </mat-form-field>
+
+</mat-card>
+

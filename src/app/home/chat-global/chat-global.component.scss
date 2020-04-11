@@ -1,0 +1,69 @@
+.card-title-global {
+    background-color: #73d99a;
+    .title-global {
+        text-align: center;
+        font-size: 1.4em;
+        color: white;
+    }
+}
+
+.title-global {
+    text-align: center;
+    font-size: 1.4em;
+    color: white;
+}
+
+.card-chat-global {
+    background-color: #fff8c7;
+    height: 100%;
+    .scroll {
+        // height: 40em!important;
+        color:blue($color: #000000)
+    }
+
+    .list-msg {
+        margin-right: 4%;
+    }
+    
+    .form-chat {
+        width: 100%;
+        .textarea-global {
+            border: solid 2px green!important;
+        }
+    }
+
+    .card-msg {
+        background-color: #e4e6e3;
+        margin-right: 10%;
+        width: auto;
+    }
+
+    .card-msg-my-user {
+        background-color: #afff91;;
+        margin-left: 10%;
+    }
+
+    .title-msg-my-user {
+        text-align: right;
+    }
+
+    .header-hours {
+        margin-left: 2%;
+        text-align: left;
+        margin-bottom: 3.5%;
+        font-size: 10px;
+        color: black;
+    }
+
+    .header-hours-my-user {
+        text-align: right;
+        margin-right: 2%;
+        margin-bottom: 3.5%;
+        font-size: 10px;
+        color: black;
+    }
+
+    .text-msg-my-user {
+        text-align: left;
+    }
+}

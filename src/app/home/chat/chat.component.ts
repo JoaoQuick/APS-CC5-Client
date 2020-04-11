@@ -1,12 +1,12 @@
 import { Component, OnInit, Input, ViewChild,
         HostListener}                          from '@angular/core';
-import { FirebaseService }                     from '../services/firebase.service';
-import { Messaging }                           from '../interface/messagin';
-import { User }                                from '../interface/user';
-import { EventsCommunicationsService }         from '../services/events-communications.service';
-import { UsersHttpService }                    from '../services/users-http.service';
+import { FirebaseService }                     from '../../services/firebase.service';
+import { Messaging }                           from '../../interface/messagin';
+import { User }                                from '../../interface/user';
+import { EventsCommunicationsService }         from '../../services/events-communications.service';
+import { UsersHttpService }                    from '../../services/users-http.service';
 import { CdkVirtualScrollViewport }            from '@angular/cdk/scrolling';
-import { ConstantsService }                    from '../services/constants.service';
+import { ConstantsService }                    from '../../services/constants.service';
 
 @Component({
   selector: 'app-chat',
@@ -21,6 +21,7 @@ export class ChatComponent implements OnInit {
     private _ConstantsService: ConstantsService
   ) { 
     this.getUserToConversation();
+    this.getUserToConversationExistent()
   }
   messaging: string;
   chatToken: string;
@@ -28,6 +29,7 @@ export class ChatComponent implements OnInit {
   msgs: Array<Messaging>;
   myUser: User;
   heightScroll: number;
+
 
   @ViewChild(CdkVirtualScrollViewport, {static: false}) viewport: CdkVirtualScrollViewport;
 
@@ -57,7 +59,7 @@ export class ChatComponent implements OnInit {
     this._eventCommunication.initConversationToNewUser.subscribe(
       user => {
         this.chatToUsers = user;
-        this._db.chatToken(user['email']).subscribe(
+        this._db.chatToken(user).subscribe(
           chatToken => {
             this.chatToken = chatToken['chat'];
             this.messagingChat();
@@ -66,13 +68,25 @@ export class ChatComponent implements OnInit {
       }
     );
   }
+  
+  getUserToConversationExistent() {
+    this._eventCommunication.initConversationUser.subscribe(
+      register => {
+        this.chatToUsers = {nickname: register['user']}
+        this.chatToken = register['chat'];
+        console.log(register['chat']);
+        console.log(register);
+        console.log(this.chatToUsers)
+        this.messagingChat();
+      });
+        // this.chatToUsers = user;
+        //     this.chatToken = user['chat'];
+            
+  }
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {
     this.heightScroll = this.ajusteSize(window.innerHeight);
-    console.log(this.heightScroll)
-    console.log(typeof(this.heightScroll))
-    console.log(window.innerWidth + ' x ' + window.innerHeight)
   }
 
   ajusteSize(height) {
@@ -95,31 +109,15 @@ export class ChatComponent implements OnInit {
     if (height >= 824 && height <= 887)
       return height * 0.49;
     if (height >= 888 && height <= 927)
-      return height * 0.51
+      return height * 0.514;
     if (height >= 928 && height < 1000)
-      return height * 0.52
+      return height * 0.52;
     if (height >= 1000)
-      return height * 0.53
+      return height * 0.53;
   }
-
-  // ajusteSize(height: number, percentage: number, interval: number) {
-  //   let sizeDefault: number = 1080;
-  //   let sizeHeight: number = height;
-  //   let quant: number = interval;
-  //   let porcentagem: number = percentage;
-  //   let porcs: Array<{size: number, px: number}> = [];
-  //   for (let counter:number = 0; counter<quant; counter++) {
-  //     let positionPorc = sizeDefault * porcentagem
-  //     porcs.push({size: sizeDefault, px: positionPorc});
-  //     sizeDefault = sizeDefault - quant
-  //     let y = (sizeDefault * porcentagem)/ (sizeDefault + quant)
-  //   }
-  //   for (let i in porcs) {
-  //     if (sizeHeight > porcs[i]['size']) {
-  //       console.log(porcs[Number(i) - 1]['px'])
-  //       return porcs[Number(i) - 1]['px']
-  //       break;
-  //     }
-  //   }
-  // }
+ 
+  ajusteSize2(height: number, percentage: number) {
+    let newHeight: number = height * percentage
+    return newHeight
+  }
 }

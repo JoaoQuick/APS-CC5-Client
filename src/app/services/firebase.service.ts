@@ -3,6 +3,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 // import 'firebase/firestore';
 import { auth } from 'firebase';
 import { User } from '../interface/user';
+import { RegisterConversation } from '../interface/registerConversation';
 import { UsersHttpService } from '../services/users-http.service'
 import { ConstantsService } from '../services/constants.service';
 import { Observable, Subscriber } from 'rxjs';
@@ -41,32 +42,32 @@ export class FirebaseService {
     })
   }
  
-  startedChat(user: string){
-    this._db.chatToken(user).subscribe(
-      response => {
-        this._fb.collection('chats').doc(
-          response['chat'] +'/conversations/' + this._fb.createId()).set(
-            {
-            email: this._ConstantsService.getUser()['email'],
-            msg: "Salvee",
-            "datetime": firestore.Timestamp
-          })
-       },
-      error => console.log(error)
-    );
-  }
+  // startedChat(user: string){
+  //   this._db.chatToken(user).subscribe(
+  //     response => {
+  //       this._fb.collection('chats').doc(
+  //         response['chat'] +'/conversations/' + this._fb.createId()).set(
+  //           {
+  //           email: this._ConstantsService.getUser()['email'],
+  //           msg: "Salvee",
+  //           "datetime": firestore.Timestamp
+  //         })
+  //      },
+  //     error => console.log(error)
+  //   );
+  // }
 
-  sendMessageToUser(email: string): Observable<Object> {
-    return new Observable<Object>(subscriber => {
-      this._db.chatToken(email).subscribe(
-        tokenChat => {
-          this._fb.collection('chats/'+ tokenChat['chat']+'/conversations').valueChanges().subscribe(
-            () => subscriber.next(tokenChat) 
-          );
-        }
-      );
-    });
-  }
+  // sendMessageToUser(email: string): Observable<Object> {
+  //   return new Observable<Object>(subscriber => {
+  //     this._db.chatToken(email).subscribe(
+  //       tokenChat => {
+  //         this._fb.collection('chats/'+ tokenChat['chat']+'/conversations').valueChanges().subscribe(
+  //           () => subscriber.next(tokenChat) 
+  //         );
+  //       }
+  //     );
+  //   });
+  // }
 
   getUrlApiDatabase(): Observable<{url: string}> {
     return new Observable<{url: string}>(subscriber => {
@@ -110,6 +111,20 @@ export class FirebaseService {
       }).valueChanges()
         .subscribe(
           response => subscriber.next(response as Array<Messaging>),
+          error => console.log(error)
+        );
+      }
+    );
+  }
+
+  getConversationsWithUsers(id: string): Observable<Array<RegisterConversation>> {
+    return new Observable<Array<RegisterConversation>>(subscriber => {
+      this._fb.collection('parameters/conversations_of_users/' + id, ref => {
+        let query : firebase.firestore.CollectionReference | firebase.firestore.Query = ref;
+        query = query.orderBy('last_conversation_at')
+        return query
+      }).valueChanges().subscribe(
+          response => subscriber.next(response as Array<RegisterConversation>),
           error => console.log(error)
         );
       }

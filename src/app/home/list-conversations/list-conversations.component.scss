@@ -1,0 +1,26 @@
+.scroll {
+    margin-top: 2%;
+
+    mat-card-title {
+        font-size: 20px;
+    }
+    
+    .mat-list-icon {
+        color: rgba(0, 0, 0, 0.54);
+        background-image: url('../../doc/person-icon_31846.png');
+        vertical-align: middle;
+    }
+
+    .list-users {
+        margin-top: 12%;
+    }
+
+    .example-header-image {
+        background-image: url('../../doc/person-icon_31846.png');
+        background-size: cover;
+        float: left;
+        margin-right: 10px;
+        border: transparent thin solid;
+    }
+}
+

@@ -3,28 +3,28 @@
     height: 20%;
 }
 
-.card-chat {
-    width: 100%;
-    height: 80%;
+.card-headers {
+    background-color: #73d99a;
 
-    .card-headers {
-        background-color: #73d99a;
-
-        .header-image-user {
-            background-image: url('../doc/person-icon_31846.png');
-            background-size: 2.5em;
-            position: relative;
-            background-repeat: no-repeat;
-        }
-
-        .title-chat {
-            margin-top: 1.5%;
-        }
+    .header-image-user {
+        background-image: url('../../doc/person-icon_31846.png');
+        background-size: 2.5em;
+        position: relative;
+        background-repeat: no-repeat;
     }
-    
+
+    .title-chat {
+        margin-top: 1.5%;
+    }
+}
+
+.card-chat {
     .scroll {
-        // height: 25em!important;
         margin-top: 2%;
+
+        .list-msg {
+            margin-right: 4%;
+        }
 
         .card-msg {
             background-color: #e4e6e3;
@@ -35,6 +35,7 @@
         .card-msg-my-user {
             background-color: #afff91;;
             margin-left: 10%;
+            margin-right: 2%;
         }
 
         .title-msg-my-user {
@@ -43,20 +44,23 @@
 
         .header-hours {
             margin-left: 2%;
+            text-align: left;
+            margin-bottom: 3.5%;
+            font-size: 10px;
+            color: black;
         }
-
+    
         .header-hours-my-user {
             text-align: right;
-            margin-right: 2%;
+            margin-right: 4%;
+            margin-bottom: 3.5%;
+            font-size: 10px;
+            color: black;
         }
 
         .text-msg-my-user {
             text-align: left;
         }
-
-        // .text-msg {
-        //     margin-right: 10%;
-        // }
     }
 
     .list-msg {
@@ -71,7 +75,7 @@
     }
 
     .header-image {
-        background-image: url('../doc/x.png');
+        background-image: url('../../doc/x.png');
         background-size: 30px 30px;
         float: right;
         background-repeat: no-repeat;

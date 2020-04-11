@@ -20,9 +20,7 @@ export class UsersHttpService {
         const url = this._ConstantsService.getUrl() + '/user';
         // const url = 'https://jsonplaceholder.typicode.com/users';
         this._http.get(url).subscribe(
-          response => {
-            console.log(response)
-            subscriber.next(response as Array<string>)},
+          response => subscriber.next(response as Array<string>),
           (error) => subscriber.next(error)           
         )
       }
@@ -48,21 +46,21 @@ export class UsersHttpService {
         'password': user.password
       })
       this._http.get(url, {headers: ckeckUser}).subscribe(
-        response => {
-          console.log(response)
-          subscribe.next(response as string)},
+        response => subscribe.next(response as string),
         erro => subscribe.next(erro)
         // user invalid
       )
     })
   }
 
-  chatToken(email: string): Observable<Object> {
+  chatToken(user: User): Observable<Object> {
     return new Observable<Object>(subscriber => {
       const url = this._ConstantsService.getUrl() + '/user-chats';
       const users = new HttpHeaders({
-        'user_1': this._ConstantsService.getUser()['email'],
-        'user_2': email
+        'uid': this._ConstantsService.getUser()['token'],
+        'my_email': this._ConstantsService.getUser()['email'],
+        'uid_of_user': user['token']['La']['jt'].split('.')[1],
+        'email_of_user': user['email']
       })
       this._http.get(url, {headers: users}).subscribe(
         response => subscriber.next(response),

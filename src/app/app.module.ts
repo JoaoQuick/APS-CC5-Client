@@ -21,16 +21,22 @@ import { MatInputModule } from '@angular/material/input';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatSelectModule } from '@angular/material/select';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { LoginComponent } from './login/login.component';
+import { MatListModule } from '@angular/material/list';
+import { MatIconModule } from '@angular/material/icon';
 import { CdkTableModule } from '@angular/cdk/table';
 import { MatTableModule } from '@angular/material/table';
+import { MatTabsModule } from '@angular/material/tabs';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { TableVirtualScrollModule } from 'ng-table-virtual-scroll';
-import { ChatComponent } from './chat/chat.component';
-import { ChatGlobalComponent } from './chat-global/chat-global.component';
+import { ChatComponent } from './home/chat/chat.component';
+import { ChatGlobalComponent } from './home/chat-global/chat-global.component';
 import { ConfigComponent } from './config/config.component';
+import { ListUsersComponent } from './home/list-users/list-users.component';
+import { ListConversationsComponent } from './home/list-conversations/list-conversations.component';
 
 const root = [
   { path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -46,7 +52,9 @@ const root = [
     LoginComponent,
     ChatComponent,
     ChatGlobalComponent,
-    ConfigComponent
+    ConfigComponent,
+    ListUsersComponent,
+    ListConversationsComponent
   ],
   imports: [
     BrowserModule,
@@ -58,6 +66,10 @@ const root = [
     BrowserAnimationsModule,
     MatSliderModule,
     MatInputModule,
+    MatSidenavModule,
+    MatTabsModule,
+    MatIconModule,
+    MatListModule,
     MatFormFieldModule,
     MatAutocompleteModule,
     MatGridListModule,

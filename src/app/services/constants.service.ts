@@ -14,6 +14,7 @@ export class ConstantsService {
   ) { }
 
   private url: string = 'http://127.0.0.1:8080';
+  // private user: User;
   private user: User = {
     email: 'joaovitor-15@live.com',
     nickname: 'João Vitor',
