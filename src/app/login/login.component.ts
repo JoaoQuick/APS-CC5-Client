@@ -31,9 +31,9 @@ export class LoginComponent implements OnInit {
     private _fb: FirebaseService,
     private _ConstantsService: ConstantsService
   ) {
-    // this._fb.getUrlApiDatabase().subscribe(
-    //   url => this._ConstantsService.setUrl(url['url'])
-    // );
+    this._fb.getUrlApiDatabase().subscribe(
+      url => this._ConstantsService.setUrl(url['url'])
+    );
    }
 
   ngOnInit() {

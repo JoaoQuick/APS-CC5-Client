@@ -39,7 +39,14 @@ export class ChatComponent implements OnInit {
   } 
 
   submitMessaging() {
-    this._fb.setConversations(this.chatToken, this.messaging);
+    if (!(this.messaging == undefined || this.messaging.trim().length == 0)) {
+      this._fb.setConversations(this.chatToken, this.messaging);
+      if (this.chatToUsers.token.split('.')[1] == undefined)
+        this._db.notifyMessageSending(this.chatToUsers.token);
+      else 
+        this._db.notifyMessageSending(this.chatToUsers.token.split('.')[1])
+    }
+      
     this.messaging = '';
   }
 
@@ -51,6 +58,12 @@ export class ChatComponent implements OnInit {
           setTimeout(() => {
             this.viewport.scrollToIndex(4999, 'smooth');
           },1);
+        if (response.msgs.length > 0) {
+          if (this.chatToUsers.token.split('.')[1] == undefined)
+          this._db.removeNotifyMessageSending(this.chatToUsers.token);
+        else 
+          this._db.removeNotifyMessageSending(this.chatToUsers.token.split('.')[1])
+        }
       }
     );
   }
@@ -72,11 +85,11 @@ export class ChatComponent implements OnInit {
   getUserToConversationExistent() {
     this._eventCommunication.initConversationUser.subscribe(
       register => {
-        this.chatToUsers = {nickname: register['user']}
+        this.chatToUsers = {
+          nickname: register['nickname'], email: register['user'],
+          token: register['uid_user']
+        }
         this.chatToken = register['chat'];
-        console.log(register['chat']);
-        console.log(register);
-        console.log(this.chatToUsers)
         this.messagingChat();
       });
         // this.chatToUsers = user;

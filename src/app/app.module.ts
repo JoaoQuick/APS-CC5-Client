@@ -22,6 +22,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatSelectModule } from '@angular/material/select';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatBadgeModule } from '@angular/material/badge';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { LoginComponent } from './login/login.component';
@@ -70,6 +71,7 @@ const root = [
     MatTabsModule,
     MatIconModule,
     MatListModule,
+    MatBadgeModule,
     MatFormFieldModule,
     MatAutocompleteModule,
     MatGridListModule,

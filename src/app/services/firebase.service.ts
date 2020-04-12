@@ -41,33 +41,6 @@ export class FirebaseService {
       })
     })
   }
- 
-  // startedChat(user: string){
-  //   this._db.chatToken(user).subscribe(
-  //     response => {
-  //       this._fb.collection('chats').doc(
-  //         response['chat'] +'/conversations/' + this._fb.createId()).set(
-  //           {
-  //           email: this._ConstantsService.getUser()['email'],
-  //           msg: "Salvee",
-  //           "datetime": firestore.Timestamp
-  //         })
-  //      },
-  //     error => console.log(error)
-  //   );
-  // }
-
-  // sendMessageToUser(email: string): Observable<Object> {
-  //   return new Observable<Object>(subscriber => {
-  //     this._db.chatToken(email).subscribe(
-  //       tokenChat => {
-  //         this._fb.collection('chats/'+ tokenChat['chat']+'/conversations').valueChanges().subscribe(
-  //           () => subscriber.next(tokenChat) 
-  //         );
-  //       }
-  //     );
-  //   });
-  // }
 
   getUrlApiDatabase(): Observable<{url: string}> {
     return new Observable<{url: string}>(subscriber => {
@@ -156,30 +129,4 @@ export class FirebaseService {
       );
     });
   }
-
-     // this._fb.collection<User>('chats/FfrMhGgYrRfKmQp2FoJs/conversations').valueChanges().subscribe(response => {
-    //   console.log(response)})
-
-  // this._fb.collection('chats/FfrMhGgYrRfKmQp2FoJs/conversations').doc(
-  //   'askmnfianfsjafnsj').set({
-  //     user: "admin",
-  //     msg: "Como está a faculdade men? em?"
-  //   })
-
-
-   // this._fb.collection<User>('chats/FfrMhGgYrRfKmQp2FoJs/conversations').valueChanges().subscribe(response => {
-    //   console.log(response)})
-  // db.doc<User>('users/jtCQ7Q8dPvWTzM3SMXXD').valueChanges().subscribe(response => {
-    //   console.log(response)})
-
-    // db.collection<User>('users/5LfHosQOQunkZI7sarqN/chats').valueChanges().subscribe(response => {
-    //   console.log(response)})
-
-    // db.collection<Array<User>>('users/5LfHosQOQunkZI7sarqN/chats').valueChanges().subscribe(response => {
-    //   console.log(response)})      
-    // this.db.collection('users/5LfHosQOQunkZI7sarqN/chats').doc(this.db.createId()).set({
-    //   user: "Eoq",
-    //   password: "1478",
-    //   msg: "Salve aliado, tudo firmão?"
-    // })
 }

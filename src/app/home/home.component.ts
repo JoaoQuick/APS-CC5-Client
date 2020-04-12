@@ -10,12 +10,15 @@ import { FirebaseService }  from '../services/firebase.service';
 })
 export class HomeComponent implements OnInit {
 
+  initComponent: boolean;
+
   constructor(
     private _ConstantsService: ConstantsService,
     private _fb: FirebaseService
-  ) { }
+  ) { 
+    this.initComponent = this._ConstantsService.ckeckUser();
+  }
 
   ngOnInit() {
-    this._ConstantsService.ckeckUser();
   }
 }

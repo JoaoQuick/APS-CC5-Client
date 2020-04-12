@@ -44,13 +44,12 @@ export class UsersHttpService {
       const ckeckUser = new HttpHeaders({
         'email': user.email,
         'password': user.password
-      })
+      });
       this._http.get(url, {headers: ckeckUser}).subscribe(
         response => subscribe.next(response as string),
         erro => subscribe.next(erro)
-        // user invalid
-      )
-    })
+      );
+    });
   }
 
   chatToken(user: User): Observable<Object> {
@@ -59,7 +58,7 @@ export class UsersHttpService {
       const users = new HttpHeaders({
         'uid': this._ConstantsService.getUser()['token'],
         'my_email': this._ConstantsService.getUser()['email'],
-        'uid_of_user': user['token']['La']['jt'].split('.')[1],
+        'uid_of_user': user['token'].split('.')[1],
         'email_of_user': user['email']
       })
       this._http.get(url, {headers: users}).subscribe(
@@ -67,5 +66,25 @@ export class UsersHttpService {
         error => subscriber.next(error)
       );
     });
+  }
+
+  notifyMessageSending(token: string) {
+    const url = this._ConstantsService.getUrl() + '/user-chats';
+    let params = {
+      action: 'notify',
+      uid_user: this._ConstantsService.getUser().token,
+      uid_another_user: token
+    }
+    this._http.post(url, params).subscribe();
+  }
+
+  removeNotifyMessageSending(token: string) {
+    const url = this._ConstantsService.getUrl() + '/user-chats';
+    let params = {
+      action: 'remove_notify',
+      uid_user: this._ConstantsService.getUser().token,
+      uid_another_user: token
+    }
+    this._http.post(url, params).subscribe();
   }
 }

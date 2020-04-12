@@ -1,12 +1,14 @@
 <mat-card>
     <cdk-virtual-scroll-viewport [ngStyle]="{'height.px': heightScroll}" itemSize="50" class="scroll">
-        <div *ngFor="let register of registerConversations" style="margin-top: 10%;">
-            <div class="list-users" type="button" (click)="selectUsers(register)">
+        <div *ngFor="let register of registerConversations; let i = index" style="margin-top: 10%;" >
+            <div class="list-users" type="button" (click)="selectUsers(register)" *ngIf="register.last_conversation_at != 'pending'">
                 <img mat-card-avatar class="example-header-image">
-                <mat-card-title>{{register.user}}</mat-card-title>
-                <mat-card-subtitle >Really, they are!</mat-card-subtitle>
+                <mat-card-title *ngIf="register.viewed" [matBadge]="register.messages_sent" matBadgeColor="warn">{{register.nickname}}</mat-card-title>
+                <mat-card-title *ngIf="!register.viewed">{{register.nickname}}</mat-card-title>
+                <mat-card-subtitle>{{register.user}}</mat-card-subtitle>
+                <hr/>
             </div>
-            <hr/>
+            
         </div>
     </cdk-virtual-scroll-viewport>
 </mat-card>

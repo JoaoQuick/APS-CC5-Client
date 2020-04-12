@@ -35,6 +35,7 @@ export class ListUsersComponent implements OnInit {
 
   selectUsers(user: User) {
     this._eventComunicarion.initConversationToNewUser.emit(user);
+    
   }
 
   teste() {
