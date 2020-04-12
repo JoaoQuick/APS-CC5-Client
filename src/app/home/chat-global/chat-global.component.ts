@@ -26,7 +26,6 @@ export class ChatGlobalComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this._ConstantsService.ckeckUser();
     this.myUser = this._ConstantsService.getUser();
     this.messagignsChatGlobal();
     this.onResize('');

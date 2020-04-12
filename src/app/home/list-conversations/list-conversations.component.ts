@@ -30,11 +30,7 @@ export class ListConversationsComponent implements OnInit {
     this._fb.getConversationsWithUsers(
       this._ConstantsService.getUser()['token']
     ).subscribe(
-      response => {
-        this.registerConversations = response
-        console.log(response)
-        console.log(response[0]['last_conversation_at'])
-      },
+      response =>  this.registerConversations = response,
       erro => console.log(erro),
     ) 
   }

@@ -32,7 +32,6 @@ export class ChatComponent implements OnInit {
 
 
   @ViewChild(CdkVirtualScrollViewport, {static: false}) viewport: CdkVirtualScrollViewport;
-
   ngOnInit() {
     this.myUser = this._ConstantsService.getUser();
     this.onResize('');
@@ -56,7 +55,7 @@ export class ChatComponent implements OnInit {
         if (response.token == this.chatToken)
           this.msgs = response.msgs;
           setTimeout(() => {
-            this.viewport.scrollToIndex(4999, 'smooth');
+            this.viewport.scrollToIndex(response.msgs.length, 'smooth');
           },1);
         if (response.msgs.length > 0) {
           if (this.chatToUsers.token.split('.')[1] == undefined)
@@ -132,5 +131,9 @@ export class ChatComponent implements OnInit {
   ajusteSize2(height: number, percentage: number) {
     let newHeight: number = height * percentage
     return newHeight
+  }
+
+  detroyChat() {
+    this.chatToUsers = undefined;
   }
 }

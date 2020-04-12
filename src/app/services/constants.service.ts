@@ -1,8 +1,6 @@
-import { Injectable } from '@angular/core';
-import { User } from '../interface/user';
-import { Router } from '@angular/router';
-import { HostListener } from '@angular/core';
-
+import { Injectable }   from '@angular/core';
+import { User }         from '../interface/user';
+import { Router }       from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -33,9 +31,10 @@ export class ConstantsService {
   }
 
   ckeckUser(): boolean {
-    if (!this.user || !this.user.token)
+    if (!this.user || !this.user.token) {
       this.router.navigate(['/login']);
-      return false
+      return false;
+    }
     return true
   }
 

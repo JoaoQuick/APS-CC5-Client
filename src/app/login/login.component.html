@@ -10,7 +10,8 @@
 
     <mat-form-field class="form-login" appearance="fill">
         <mat-label>Senha</mat-label>
-        <input matInput [(ngModel)]="user.password" type="password">
+        <input matInput [(ngModel)]="user.password" type="password"
+        (keydown.enter)="userAccess()">
     </mat-form-field><br/>
 
     <button mat-button (click)="userAccess()">Entrar</button>
