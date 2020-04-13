@@ -11,6 +11,8 @@
 <mat-card class="card-chat" *ngIf="chatToUsers">
   <!-- Mensagens -->
     <cdk-virtual-scroll-viewport [ngStyle]="{'height.px': heightScroll}" itemSize="50" class="scroll">
+      <mat-spinner class="spinner" *ngIf="msgs == undefined"
+        mode="indeterminate" diameter="40"></mat-spinner>
       <div *ngFor="let msg of msgs; let i = index" class="list-msg">
         <div class="card-msg-global">
           <mat-card [ngClass]="{'card-msg': msgs[i].email != myUser.email, 'card-msg-my-user': msgs[i].email == myUser.email}">

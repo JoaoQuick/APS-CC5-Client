@@ -18,11 +18,10 @@
     }
 
     .icon {
-        font-size: 2em;
+        font-size: 2.5em;
         margin-left: auto;
         margin-right: 10%;
         position: relative;
-        margin-top: 2%;
     }
 }
 
@@ -92,4 +91,11 @@
     .title-chat {
         font-size: 20px;
     }
+}
+
+.spinner {
+    margin:0 auto;
+    margin-top: 3%;
+    size: 10px;
+    padding: 12px;
 }

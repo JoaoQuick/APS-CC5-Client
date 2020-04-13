@@ -5,6 +5,8 @@
     <mat-card class="card-chat-global">
         <mat-card-content>
             <cdk-virtual-scroll-viewport [ngStyle]="{'height.px': heightScroll}" itemSize="50" class="scroll">
+                <mat-progress-spinner class="spinner" *ngIf="globalMessaging == undefined"
+                    mode="indeterminate" diameter="35"></mat-progress-spinner>
                <div *ngFor="let msg of globalMessaging; let i = index" class="list-msg">
                     <div class="card-msg-global">
                             <mat-card [ngClass]="{'card-msg': globalMessaging[i].email != myUser.email, 
@@ -28,7 +30,7 @@
                 </div>
             </cdk-virtual-scroll-viewport>
             <hr/>
-            <mat-form-field appearance="outline" class="form-chat">
+            <mat-form-field appearance="outline" class="form-chat" *ngIf="globalMessaging">
                 <mat-label>Mensagem</mat-label>
                 <textarea matInput class="textarea-global" [(ngModel)]="inputMessaging" 
                     (keydown.enter)="submitMessaging()"

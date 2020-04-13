@@ -28,6 +28,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { LoginComponent } from './login/login.component';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { CdkTableModule } from '@angular/cdk/table';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -70,6 +71,7 @@ const root = [
     MatSidenavModule,
     MatTabsModule,
     MatIconModule,
+    MatProgressSpinnerModule,
     MatListModule,
     MatBadgeModule,
     MatFormFieldModule,

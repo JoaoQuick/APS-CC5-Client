@@ -25,6 +25,8 @@ export class LoginComponent implements OnInit {
   };
   alert: Object = {};
   loginOrAccess: boolean = true;
+  showSpinner: boolean = false;
+
   constructor(
     private _users: UsersHttpService,
     private router: Router,
@@ -52,8 +54,10 @@ export class LoginComponent implements OnInit {
   // }
 
   userAccess() {
+    this.showSpinner = true;
     this._fb.userAccess(this.user['email'], this.user['password']).subscribe(
       response => {
+        this.showSpinner = false;
         if (response['email'] && response['token']) {
           this._ConstantsService.setUser(response as User);
           this.showAlert('Login bem sucedido', 'alert-success');
@@ -62,7 +66,11 @@ export class LoginComponent implements OnInit {
         if (response['error'])
           this.showAlert(response['error'], 'alert-danger', this.registerUser['email'], 'error');
       },
-      error => console.log(error)
+      error => {
+        this.showSpinner = false;
+        console.log(error)
+        this.showAlert('Ocorreu um erro ao acessar o servidor', 'alert-danger');
+      }
     )
   }
 
@@ -76,25 +84,36 @@ export class LoginComponent implements OnInit {
   }
 
   createUser() {
+    this.showSpinner = true;
     if (this.registerUser['email'] != '' && this.registerUser['password'] != '' && (
-          this.registerUser['nickname']) != '') {
-            this._users.registerUser(this.registerUser).subscribe(response => {
-                if (response['status'] != 'error') {
-                    this._ConstantsService.setUser({
-                      email: this.registerUser.email,
-                      password: this.registerUser.password,
-                      token: response['token'],
-                      nickname: this.registerUser.nickname
-                    });
-                    this.showAlert('Usuário cadastrado com sucesso', 'alert-success');
-                    this.access();
+      this.registerUser['nickname']) != '') {
+        this._users.registerUser(this.registerUser).subscribe(
+          response => {
+            if (response['status'] != 'error') {
+              this._fb.userAccess(this.registerUser['email'], this.registerUser['password']).subscribe(
+                response => {
+                  if (response['email'] && response['token']) {
+                    this.showSpinner = false;
+                    this._ConstantsService.setUser(response as User)
                   }
-                else this.showAlert(response['error'], 'alert-danger', 
-                                   this.registerUser['email'], response['status']);
-                },
-              error => console.log(error)
-            );
+                  this.showAlert('Usuário cadastrado com sucesso', 'alert-success');
+                  this.access();
+                }
+              );
+            }
+            else {
+              this.showSpinner = false;
+              this.showAlert(response['error'], 'alert-danger', 
+                              this.registerUser['email'], response['status']);
+            }
+          },
+          error => {
+            this.showSpinner = false;
+            console.log(error)
+            this.showAlert('Ocorreu um erro ao acessar o servidor', 'alert-danger');
           }
+        );
+      }
     else this.showAlert('Preencha todos os campos para registrar-se!', 'alert-danger');
   }
 
@@ -108,7 +127,7 @@ export class LoginComponent implements OnInit {
           break;
         }
         case 'user_alread_created': {
-          message = 'Outra conta já está utilizando o e-mail' + email + '.';
+          message = 'Outra conta já está utilizando o e-mail: ' + email + '.';
           break;
         }
         case 'The password is invalid or the user does not have a password.': {

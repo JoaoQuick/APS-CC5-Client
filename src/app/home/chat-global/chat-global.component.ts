@@ -18,6 +18,7 @@ export class ChatGlobalComponent implements OnInit {
   myUser: User;
   heightScroll: number;
   heightHeaders: number;
+  showSpinner: boolean = true;
   @ViewChild(CdkVirtualScrollViewport, {static: false}) viewport: CdkVirtualScrollViewport;
 
   constructor(

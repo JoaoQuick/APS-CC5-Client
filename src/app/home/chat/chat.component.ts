@@ -29,7 +29,7 @@ export class ChatComponent implements OnInit {
   msgs: Array<Messaging>;
   myUser: User;
   heightScroll: number;
-
+  showSpinner: boolean = true;
 
   @ViewChild(CdkVirtualScrollViewport, {static: false}) viewport: CdkVirtualScrollViewport;
   ngOnInit() {
@@ -70,6 +70,7 @@ export class ChatComponent implements OnInit {
   getUserToConversation() {
     this._eventCommunication.initConversationToNewUser.subscribe(
       user => {
+        this.msgs = undefined;
         this.chatToUsers = user;
         this._db.chatToken(user).subscribe(
           chatToken => {
@@ -84,6 +85,7 @@ export class ChatComponent implements OnInit {
   getUserToConversationExistent() {
     this._eventCommunication.initConversationUser.subscribe(
       register => {
+        this.msgs = undefined;
         this.chatToUsers = {
           nickname: register['nickname'], email: register['user'],
           token: register['uid_user']
