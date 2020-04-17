@@ -1,6 +1,26 @@
 {
-    "rules": {
-      ".read": "auth != null",
-      ".write": "auth != null"
+  "rules": {
+    "parameters": {
+      "$api": {
+        ".read": true,
+        ".write": false
+      },
+      "conversations_of_users": {
+        ".read": "auth != null",
+        ".write": "auth != null"
+      }
+    },
+    "chats": {
+      "chat": {
+        ".read": "auth != null",
+        ".write": "auth != null"
+      }
+    },
+    "users": {
+      "user": {
+        ".read": "auth != null",
+        ".write": "auth != null"
+      }
     }
   }
+}

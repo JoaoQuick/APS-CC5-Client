@@ -36,8 +36,10 @@ export class FirebaseService {
           else subscriber.next(response)
         }
       )
-      .catch(error => { subscriber.next({'error': error['message']} as Object)
-        
+      .catch(
+        error => { 
+          console.log(error)
+          subscriber.next({'error': error['message']} as Object)   
       })
     })
   }

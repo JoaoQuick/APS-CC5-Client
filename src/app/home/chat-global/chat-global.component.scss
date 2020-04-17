@@ -1,9 +1,34 @@
 .card-title-global {
     background-color: #73d99a;
+
     .title-global {
-        text-align: center;
-        font-size: 1.4em;
+        margin-top: 1.5%;
         color: white;
+        margin: auto;
+
+    }
+
+    .icon {
+        font-size: 2.5em;
+        margin-left: auto;
+        margin-right: 10%;
+        position: relative;
+        vertical-align: middle;
+    }
+}
+
+.card-title-global-mobile {
+    background-color: #73d99a;
+
+    .title-global {
+        color: white;
+        margin: auto;
+    }
+
+    .icon {
+        font-size: 2em;
+        margin-right: 10%;
+        vertical-align: middle;
     }
 }
 
@@ -28,7 +53,7 @@
     .form-chat {
         width: 100%;
         .textarea-global {
-            border: solid 2px green!important;
+            size: 20px
         }
     }
 

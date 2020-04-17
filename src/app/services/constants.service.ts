@@ -11,7 +11,7 @@ export class ConstantsService {
     private router: Router
   ) { }
 
-  private url: string = 'http://127.0.0.1:8080';
+  private url: string = '';
   private user: User;
   // private user: User = {
   //   email: 'joaovitor-15@live.com',

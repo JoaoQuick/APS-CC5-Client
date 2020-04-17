@@ -1,5 +1,5 @@
-import { Component, OnInit, 
-        HostListener, ViewChild }       from '@angular/core';
+import { Component, OnInit, HostListener,  
+         ViewChild, Input, Output, EventEmitter }             from '@angular/core';
 import { User }                         from '../../interface/user';
 import { FirebaseService }              from '../../services/firebase.service';
 import { EventsCommunicationsService }  from '../../services/events-communications.service';
@@ -14,7 +14,11 @@ export class ListUsersComponent implements OnInit {
 
   users: Array<User>;
   heightScroll: number;
-
+  @Input() typeAccess: {
+    type: string,
+    action?: string
+  };
+  @Output() eventShowChat = new EventEmitter<{user: User, action: string}>();
   @ViewChild(CdkVirtualScrollViewport, {static: false}) viewport: CdkVirtualScrollViewport;
 
   constructor(
@@ -34,14 +38,12 @@ export class ListUsersComponent implements OnInit {
   }
 
   selectUsers(user: User) {
-    this._eventComunicarion.initConversationToNewUser.emit(user);
-    
-  }
-
-  teste() {
-    setTimeout(() => {
-      this.viewport.scrollToIndex(4999, 'smooth');
-    },20);
+    if (this.typeAccess.type == 'mobile') {
+      this.eventShowChat.emit({user: user, action: 'listUsers'});
+    }
+    else {
+      this._eventComunicarion.initConversationToNewUser.emit(user);
+    }
   }
 
   @HostListener('window:resize', ['$event'])

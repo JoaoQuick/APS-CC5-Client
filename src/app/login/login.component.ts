@@ -1,4 +1,4 @@
-import { Component, OnInit }      from '@angular/core';
+import { Component, OnInit, HostListener }      from '@angular/core';
 import { UsersHttpService }       from '../services/users-http.service';
 import { User }                   from '../interface/user';
 import { ConstantsService }       from '../services/constants.service';
@@ -26,33 +26,29 @@ export class LoginComponent implements OnInit {
   alert: Object = {};
   loginOrAccess: boolean = true;
   showSpinner: boolean = false;
+  typeAccess: {
+    type: string,
+    action?: string
+  } = {
+    type: 'default'
+  };
 
   constructor(
     private _users: UsersHttpService,
     private router: Router,
     private _fb: FirebaseService,
     private _ConstantsService: ConstantsService
-  ) {
-    this._fb.getUrlApiDatabase().subscribe(
-      url => this._ConstantsService.setUrl(url['url'])
-    );
-   }
+  ) { }
 
   ngOnInit() {
+    this.onResize('');
+    this._fb.getUrlApiDatabase().subscribe(api => {
+      this._ConstantsService.setUrl(api.url);
+      console.log(api);
+    });
   }
 
-  // userAccess() {
-  //   this._users.checkUserAuthentication(this.user).subscribe(response => {
-  //     if (response["status"] != 'invalid') {
-  //       this.user.authenticationToken = response['token'];
-  //       this._ConstantsService.setUser(this.user);
-  //       this.showAlert('Login bem sucedido!', 'alert-success');
-  //       this.access();
-  //     }
-  //     else this.showAlert('Login ou senha inválido!', 'alert-danger');
-  //   });
-  // }
-
+  
   userAccess() {
     this.showSpinner = true;
     this._fb.userAccess(this.user['email'], this.user['password']).subscribe(
@@ -68,7 +64,6 @@ export class LoginComponent implements OnInit {
       },
       error => {
         this.showSpinner = false;
-        console.log(error)
         this.showAlert('Ocorreu um erro ao acessar o servidor', 'alert-danger');
       }
     )
@@ -89,7 +84,7 @@ export class LoginComponent implements OnInit {
       this.registerUser['nickname']) != '') {
         this._users.registerUser(this.registerUser).subscribe(
           response => {
-            if (response['status'] != 'error') {
+            if (response['status'] == 'user created') {
               this._fb.userAccess(this.registerUser['email'], this.registerUser['password']).subscribe(
                 response => {
                   if (response['email'] && response['token']) {
@@ -101,23 +96,28 @@ export class LoginComponent implements OnInit {
                 }
               );
             }
-            else {
-              this.showSpinner = false;
-              this.showAlert(response['error'], 'alert-danger', 
-                              this.registerUser['email'], response['status']);
-            }
-          },
-          error => {
+          if (response['status'] == 'error') {
             this.showSpinner = false;
-            console.log(error)
+            this.showAlert(response['error'], 'alert-danger', 
+                            this.registerUser['email'], response['status']);
+            }
+          if (response['status'] == '0') {
+            this.showSpinner = false;
+            this.showAlert('Ocorreu um erro ao acessar o servidor, tente acessar mais tarde.', 'alert-danger');
+          }
+          },
+          () => {
+            this.showSpinner = false;
             this.showAlert('Ocorreu um erro ao acessar o servidor', 'alert-danger');
           }
         );
       }
-    else this.showAlert('Preencha todos os campos para registrar-se!', 'alert-danger');
+    else  {
+      this.showAlert('Preencha todos os campos para registrar-se!', 'alert-danger');
+      this.showSpinner = false;
+    }
   }
 
-  // Displays the message of success or error
   showAlert(msg: string, type: string, email?: string, status?: string): void {
     let message: string;
     if (status == 'error') {
@@ -184,4 +184,18 @@ export class LoginComponent implements OnInit {
     }, 2500);
   }
 
+  
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    this.configTela(window.innerWidth, window.innerHeight) ;
+  }
+
+  configTela(width: number, height: number) {
+    if (width <= 575) {
+      this.typeAccess = {type: 'mobile'};
+    }
+    else {
+      this.typeAccess = {type: 'default'};
+    }
+  }
 }

@@ -1,4 +1,5 @@
-<div class="example-card"></div>
+<div class="example-card">
+</div>
 <!-- Cabeçalho -->
 <mat-card class="card-headers" *ngIf="chatToUsers"> 
   <mat-card-header>
@@ -33,12 +34,13 @@
     </cdk-virtual-scroll-viewport>
     <!-- Input -->
     <hr/>
-    <mat-form-field appearance="outline" class="form-chat">
+    <mat-form-field appearance="outline" [ngClass]="{'form-chat-mobile': typeAccess.type == 'mobile', 
+      'form-chat': typeAccess.type != 'mobile'}">
       <mat-label>Mensagem</mat-label>
       <textarea matInput class="textarea-global" [(ngModel)]="messaging" 
           (keydown.enter)="submitMessaging()"
-          class="input-chat" mdInput ></textarea>
+          rows="2" mdInput ></textarea>
     </mat-form-field>
-
 </mat-card>
+
 

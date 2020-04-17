@@ -1,26 +1,71 @@
 <nav class="navbar navbar-inverse bg-faded">
 </nav>
 <div class="ng-container">
-    <div class="row">
+    <div class="row" *ngIf="typeAccess.type == 'default'">
         <div class="col-sm-4">
             <mat-tab-group>
                 <mat-tab label="Conversas"> 
-                    <app-list-conversations></app-list-conversations>
+                    <app-list-conversations
+                        [typeAccess]="typeAccess"></app-list-conversations>
                 </mat-tab>
                 <mat-tab label="Usuários"> 
-                    <app-list-users></app-list-users>
+                    <app-list-users
+                        [typeAccess]="typeAccess"></app-list-users>
                 </mat-tab>
             </mat-tab-group>
-            
+
         </div>
 
         <div class="col-sm-4">
-            <app-chat></app-chat>
+            <app-chat
+            [typeAccess]="typeAccess"
+            [userConversation]="userConversation"></app-chat>
         </div>
 
         <div class="col-sm-4">
-            <app-chat-global></app-chat-global>
+            <app-chat-global
+                [typeAccess]="typeAccess"></app-chat-global>
         </div>
     </div>
+    <!-- MOBILE -->
+    <div *ngIf="typeAccess.type == 'mobile'">
+        <mat-tab-group *ngIf="typeAccess.action == 'home'">
+            <mat-tab label="Conversas"> 
+                <app-list-conversations
+                    [typeAccess]="typeAccess"
+                    (eventShowChat)="showChat($event)">
+                </app-list-conversations>
+            </mat-tab>
+            <mat-tab label="Usuários"> 
+                <app-list-users
+                    [typeAccess]="typeAccess"
+                    (eventShowChat)="showChat($event)">
+                </app-list-users>
+            </mat-tab>
+            
+            <mat-tab disabled class="tab-chat-global">
+                <ng-template mat-tab-label="Chat Global">
+                    <button mat-button (click)="accessAction('chat-global')">
+                        <mat-label><b>Chat Global</b></mat-label>
+                    </button>
+                </ng-template>
+            </mat-tab>
+        </mat-tab-group>
+
+        <app-chat-global *ngIf="typeAccess.action == 'chat-global'"
+            [typeAccess]="typeAccess"
+            (eventReturnHome)="accessAction($event)">
+        </app-chat-global>
+
+        <app-chat  *ngIf="typeAccess.action == 'chat'"
+            [typeAccess]="typeAccess"
+            [userConversation]="userConversation"
+            (eventReturnHome)="accessAction($event)">
+        </app-chat>
+    </div>
 </div>
+
+
+<!-- [ngClass]="{'card-msg': msgs[i].email != myUser.email, 
+                'card-msg-my-user': msgs[i].email == myUser.email}" -->
 

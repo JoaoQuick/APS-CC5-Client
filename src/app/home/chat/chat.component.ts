@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ViewChild,
-        HostListener}                          from '@angular/core';
+        HostListener, Output, EventEmitter}    from '@angular/core';
 import { FirebaseService }                     from '../../services/firebase.service';
 import { Messaging }                           from '../../interface/messagin';
 import { User }                                from '../../interface/user';
@@ -7,6 +7,7 @@ import { EventsCommunicationsService }         from '../../services/events-commu
 import { UsersHttpService }                    from '../../services/users-http.service';
 import { CdkVirtualScrollViewport }            from '@angular/cdk/scrolling';
 import { ConstantsService }                    from '../../services/constants.service';
+import { RegisterConversation }                from '../../interface/registerConversation';
 
 @Component({
   selector: 'app-chat',
@@ -23,6 +24,7 @@ export class ChatComponent implements OnInit {
     this.getUserToConversation();
     this.getUserToConversationExistent()
   }
+  chatSubscriber: any;
   messaging: string;
   chatToken: string;
   chatToUsers: User;
@@ -30,41 +32,79 @@ export class ChatComponent implements OnInit {
   myUser: User;
   heightScroll: number;
   showSpinner: boolean = true;
-
+  @Input() typeAccess: {type: string, action?: string};
+  @Input() userConversation: {user: any, action: string};
   @ViewChild(CdkVirtualScrollViewport, {static: false}) viewport: CdkVirtualScrollViewport;
+  @Output() eventReturnHome = new EventEmitter<string>();
+
   ngOnInit() {
     this.myUser = this._ConstantsService.getUser();
     this.onResize('');
+    this.setChatTokenIfAccessMobile()
   } 
+
+  setChatTokenIfAccessMobile() {
+    if (this.typeAccess && this.typeAccess.type == 'mobile') {
+      if (this.userConversation.action == 'listUsers') {
+        this.msgs = undefined;
+        this.chatToUsers = this.userConversation.user;
+        this._db.chatToken(this.userConversation.user).subscribe(
+          chatToken => {
+            this.chatToken = chatToken['chat'];
+            this.messagingChat();
+          }
+        );
+      }
+
+      if (this.userConversation.action == 'conversations') {
+        this.msgs = undefined;
+        this.chatToUsers = {
+          nickname: this.userConversation.user['nickname'], email: this.userConversation.user['user'],
+          token: this.userConversation.user['uid_user']
+        }
+        this.chatToken = this.userConversation.user['chat'];
+        this.messagingChat();
+      }
+    }
+  }
 
   submitMessaging() {
     if (!(this.messaging == undefined || this.messaging.trim().length == 0)) {
       this._fb.setConversations(this.chatToken, this.messaging);
-      if (this.chatToUsers.token.split('.')[1] == undefined)
+      if (this.chatToUsers.token.split('.')[1] == undefined) {
         this._db.notifyMessageSending(this.chatToUsers.token);
-      else 
+      }
+      else {
         this._db.notifyMessageSending(this.chatToUsers.token.split('.')[1])
+      }
+        
     }
-      
     this.messaging = '';
   }
 
   messagingChat() {
-    this._fb.getConversations(this.chatToken).subscribe(
+    this.chatSubscriber = this._fb.getConversations(this.chatToken).subscribe(
       response => {
         if (response.token == this.chatToken)
           this.msgs = response.msgs;
-          setTimeout(() => {
-            this.viewport.scrollToIndex(response.msgs.length, 'smooth');
-          },1);
-        if (response.msgs.length > 0) {
-          if (this.chatToUsers.token.split('.')[1] == undefined)
-          this._db.removeNotifyMessageSending(this.chatToUsers.token);
-        else 
-          this._db.removeNotifyMessageSending(this.chatToUsers.token.split('.')[1])
-        }
+        setTimeout(() => {
+          this.viewport.scrollToIndex(999999, 'smooth');
+        },1);
+        this.removeNotify(response.msgs.length);
       }
     );
+  }
+
+  removeNotify(lenMessage: number) {
+    if (lenMessage > 0) {
+      if (this.chatToUsers.token.split('.')[1] == undefined) {
+        this._db.removeNotifyMessageSending(this.chatToUsers.token);
+      }
+      else {
+        this._db.removeNotifyMessageSending(this.chatToUsers.token.split('.')[1]);
+      }
+        
+    }
   }
 
   getUserToConversation() {
@@ -82,6 +122,12 @@ export class ChatComponent implements OnInit {
     );
   }
   
+  checkSubscribMessage() {
+    if (this.chatSubscriber != undefined){
+      this.chatSubscriber.unsubscribe()
+    }
+  }
+
   getUserToConversationExistent() {
     this._eventCommunication.initConversationUser.subscribe(
       register => {
@@ -92,10 +138,7 @@ export class ChatComponent implements OnInit {
         }
         this.chatToken = register['chat'];
         this.messagingChat();
-      });
-        // this.chatToUsers = user;
-        //     this.chatToken = user['chat'];
-            
+      });            
   }
 
   @HostListener('window:resize', ['$event'])
@@ -104,6 +147,9 @@ export class ChatComponent implements OnInit {
   }
 
   ajusteSize(height) {
+    if (this.typeAccess['type'] == 'mobile') {
+      return height * 0.64;
+    }
     if (height >= 0 && height <= 551)
       return height * 0.25;
     if (height >= 551 && height <= 572)
@@ -137,5 +183,9 @@ export class ChatComponent implements OnInit {
 
   detroyChat() {
     this.chatToUsers = undefined;
+    this.chatSubscriber.unsubscribe()
+    if (this.typeAccess && this.typeAccess.type == 'mobile') {
+      this.eventReturnHome.emit('home');
+    }
   }
 }

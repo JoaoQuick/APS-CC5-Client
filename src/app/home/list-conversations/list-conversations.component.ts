@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
+import { Component, OnInit, ViewChild, HostListener, Input, Output, EventEmitter } from '@angular/core';
 import { FirebaseService }  from '../../services/firebase.service';
 import { ConstantsService }  from '../../services/constants.service';
 import { RegisterConversation } from '../../interface/registerConversation';
@@ -14,10 +14,15 @@ export class ListConversationsComponent implements OnInit {
 
   registerConversations: Array<RegisterConversation>;
   heightScroll: number;
+  @Input() typeAccess: {
+    type: string,
+    action?: string
+  };
+  @Output() eventShowChat = new EventEmitter<{user: RegisterConversation, action: string}>();
 
   constructor(
     private _fb: FirebaseService,
-    private _eventComunicarion: EventsCommunicationsService,
+    private _eventComunication: EventsCommunicationsService,
     private _ConstantsService: ConstantsService
   ) { }
 
@@ -45,7 +50,10 @@ export class ListConversationsComponent implements OnInit {
   }
 
   selectUsers(register: RegisterConversation ) {
-    this._eventComunicarion.initConversationUser.emit(register);
+    if (this.typeAccess.type == 'mobile')
+      this.eventShowChat.emit({user: register, action: 'conversations'});
+    if (this.typeAccess.type == 'default')
+      this._eventComunication.initConversationUser.emit(register);
   }
 
 }

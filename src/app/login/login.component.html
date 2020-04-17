@@ -2,7 +2,10 @@
     {{alert.msg}}
 </div>
 
-<mat-card class="card-login" *ngIf="loginOrAccess">
+<mat-card *ngIf="loginOrAccess"
+    [ngClass]="typeAccess.type === 'mobile' ? 'card-login-mobile' : 'card-login'"
+    >
+    <!-- class="card-login" -->
     <mat-form-field class="form-login" appearance="fill">
         <mat-label>Email</mat-label>
         <input matInput [(ngModel)]="user.email">
@@ -17,13 +20,17 @@
     <button mat-button (click)="userAccess()">Entrar</button>
 </mat-card>
 
-<mat-card class="card-register">
+<mat-card 
+    [ngClass]="typeAccess.type === 'mobile' ? 'card-register-mobile' : 'card-register'">
+    <!-- class="card-register" -->
     <div *ngIf="!loginOrAccess">
+        
         <mat-card-header>
-            <div mat-card-avatar class="icon-return" type="button" (click)="register('true')"></div>
+            <!-- <div mat-card-avatar class="icon-return" type="button" (click)="register('true')"></div> -->
+            <mat-icon class="icon-return" type="button" (click)="register('true')">arrow_back</mat-icon>
             <h3 class="title-login">Preencha os dados para cadastrar-se</h3>
         </mat-card-header>
-        <br>
+        <hr/>
         <mat-form-field style="width: 100%;" appearance="fill" >
             <mat-label>Email</mat-label>
             <input matInput [(ngModel)]="registerUser.email">
@@ -49,3 +56,5 @@
 
 <mat-spinner class="spinner" *ngIf="showSpinner"
     mode="indeterminate" diameter="40"></mat-spinner>
+
+    <!-- [ngClass]="{'card-msg': msgs[i].email != myUser.email, 'card-msg-my-user': msgs[i].email == myUser.email}" -->

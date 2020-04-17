@@ -76,8 +76,13 @@
 
     .form-chat {
         width: 100%;
+    }
+
+    .form-chat-mobile {
+        width: 100%;
+    
         .textarea-global {
-            border: solid 2px green!important;
+            height: 30px;
         }
     }
 

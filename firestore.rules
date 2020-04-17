@@ -1,7 +1,17 @@
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /{document=**} {
+    match /parameters/{api} {
+      allow read: if true;
+      allow write: if false;
+    }
+    match /parameters/conversations_of_users/{conversations=**} {
       allow read, write: if request.auth.uid != null;
+    }
+    match /chats/{chat=**} {
+    	allow read, write: if request.auth.uid != null;
+    }
+    match /users/{user=**} {
+    	allow read, write: if request.auth.uid != null;
     }
   }
 }

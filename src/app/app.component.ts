@@ -1,5 +1,4 @@
-import { HostListener, Component } from '@angular/core';
-import { ConstantsService }                    from './services/constants.service';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -8,19 +7,6 @@ import { ConstantsService }                    from './services/constants.servic
 })
 export class AppComponent {
   title = 'client-aps';
-
-  constructor(private _ConstantsService: ConstantsService) { }
-  public innerWidth: any;
-  public innerHeight: any;
   ngOnInit() {
-      this.innerWidth = window.innerWidth;
-      this.innerHeight = window.innerHeight;
   }
-  
-  @HostListener('window:resize', ['$event'])
-  onResize(event) {
-    this.innerWidth = window.innerWidth;
-    this.innerHeight = window.innerHeight;
-  }
-
 }
