@@ -18,7 +18,6 @@ export class UsersHttpService {
   getUsers(): Observable<Array<string>> {
     return new Observable<Array<string>>(subscriber => {
         const url = this._ConstantsService.getUrl() + '/user';
-        // const url = 'https://jsonplaceholder.typicode.com/users';
         this._http.get(url).subscribe(
           response => subscriber.next(response as Array<string>),
           (error) => subscriber.next(error)           
@@ -36,7 +35,6 @@ export class UsersHttpService {
       );
     });
   }
-  // return string api: param: {responseType: 'text'}
 
   checkUserAuthentication(user: User): Observable<string> {
     return new Observable<string>(subscribe => {

@@ -27,7 +27,7 @@
                 [typeAccess]="typeAccess"></app-chat-global>
         </div>
     </div>
-    <!-- MOBILE -->
+
     <div *ngIf="typeAccess.type == 'mobile'">
         <mat-tab-group *ngIf="typeAccess.action == 'home'">
             <mat-tab label="Conversas"> 
@@ -65,7 +65,26 @@
     </div>
 </div>
 
-
-<!-- [ngClass]="{'card-msg': msgs[i].email != myUser.email, 
-                'card-msg-my-user': msgs[i].email == myUser.email}" -->
-
+<!-- <div class="container">
+    <div class="row">
+        <div class="col-9">
+        <mat-tab-group>
+            <mat-tab label="Conversas"> 
+                <app-list-conversations
+                    [typeAccess]="typeAccess"></app-list-conversations>
+            </mat-tab>
+            <mat-tab label="Usuários"> 
+                <app-list-users
+                    [typeAccess]="typeAccess"></app-list-users>
+            </mat-tab>
+        </mat-tab-group>
+        </div>
+        <div class="col-3">
+            <div class="menu-item">
+                <div class="menu-mobile"></div>
+                <div class="menu-mobile"></div>
+                <div class="menu-mobile"></div>
+            </div>
+        </div>
+    </div>
+</div> -->

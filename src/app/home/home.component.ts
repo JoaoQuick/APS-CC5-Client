@@ -27,7 +27,7 @@ export class HomeComponent implements OnInit {
     private _ConstantsService: ConstantsService,
     private _eventComunication: EventsCommunicationsService,
   ) { 
-    // this.initComponent = this._ConstantsService.ckeckUser();
+    this.initComponent = this._ConstantsService.ckeckUser();
   }
 
   ngOnInit() {

@@ -96,10 +96,10 @@ export class FirebaseService {
     return new Observable<Array<RegisterConversation>>(subscriber => {
       this._fb.collection('parameters/conversations_of_users/' + id, ref => {
         let query : firebase.firestore.CollectionReference | firebase.firestore.Query = ref;
-        query = query.orderBy('last_conversation_at')
+        query = query.orderBy('last_conversation_at');
         return query
       }).valueChanges().subscribe(
-          response => subscriber.next(response as Array<RegisterConversation>),
+          response => subscriber.next((response).reverse() as Array<RegisterConversation>),
           error => console.log(error)
         );
       }
@@ -118,7 +118,11 @@ export class FirebaseService {
 
   getUsers(): Observable<Array<User>> {
     return new Observable<Array<User>>(subscriber => {
-      this._fb.collection('users').valueChanges().subscribe(
+      this._fb.collection('users', ref => {
+        let query : firebase.firestore.CollectionReference | firebase.firestore.Query = ref;
+        query = query.orderBy('nickname');
+        return query;
+      }).valueChanges().subscribe(
         users => {
           let name_users: Array<User> = [];
           users.forEach((user: User) => {
