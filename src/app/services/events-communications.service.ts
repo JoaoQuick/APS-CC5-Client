@@ -8,10 +8,10 @@ import { RegisterConversation }           from '../interface/registerConversatio
 })
 export class EventsCommunicationsService {
 
-  constructor() { }
-
   initConversationToNewUser = new EventEmitter<User>();
   initConversationUser = new EventEmitter<RegisterConversation>();
+
+  constructor() { } 
 
   newConversation(user: User) {
     this.initConversationToNewUser.emit(user);

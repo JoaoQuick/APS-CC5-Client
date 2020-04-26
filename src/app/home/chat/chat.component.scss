@@ -5,12 +5,12 @@
 
 .card-headers {
     background-color: #73d99a;
-
-    .header-image-user {
-        background-image: url('../../doc/person-icon_31846.png');
-        background-size: 2.5em;
-        position: relative;
-        background-repeat: no-repeat;
+    
+    .example-header-image {
+        background-size: cover;
+        float: left;
+        margin-right: 10px;
+        border: transparent thin solid;
     }
 
     .title-chat {

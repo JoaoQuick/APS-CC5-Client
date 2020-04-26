@@ -1,6 +1,33 @@
-<nav class="navbar navbar-inverse bg-faded">
-</nav>
+<!-- TOP-BAR -->
+<div class="topnav">
+    <button mat-button [matMenuTriggerFor]="menu" class="topnav-right">
+        <img *ngIf="user.profile_photo == ''" [src]="profile_photo_default">
+        <img *ngIf="user.profile_photo != ''" [src]="user.profile_photo">
+    </button>
+    <mat-menu #menu="matMenu">
+        <div style="width: 280px; height: 200px;">
+            <mat-grid-list cols="5" rowHeight="80px">
+                <mat-grid-tile colspan="1">
+                    <div mat-card-avatar class="example-header-image" 
+                        [ngStyle]="{'background-image': 'url(' + user.profile_photo + ')'}">
+                    </div>
+                </mat-grid-tile>
+                <mat-grid-tile colspan="3">
+                    <div style="margin-top: 10px;">
+                        <mat-card-title >{{user.nickname}}</mat-card-title>
+                        <mat-card-subtitle>{{user.email}}</mat-card-subtitle>
+                    </div>
+                </mat-grid-tile>
+            </mat-grid-list>
+            <mat-divider></mat-divider>
+            <button mat-menu-item>Perifl</button>
+            <button mat-menu-item (click)="close()">Sair</button>
+        </div>
+    </mat-menu>
+</div>
+<!-- BODY-APP -->
 <div class="ng-container">
+    <!-- COMPUTER WEB ACCESS  -->
     <div class="row" *ngIf="typeAccess.type == 'default'">
         <div class="col-sm-4">
             <mat-tab-group>
@@ -13,7 +40,6 @@
                         [typeAccess]="typeAccess"></app-list-users>
                 </mat-tab>
             </mat-tab-group>
-
         </div>
 
         <div class="col-sm-4">
@@ -27,8 +53,9 @@
                 [typeAccess]="typeAccess"></app-chat-global>
         </div>
     </div>
-
+    <!-- MOBILE WEB ACCESS -->
     <div *ngIf="typeAccess.type == 'mobile'">
+        <!-- MENU-OPTIONS -->
         <mat-tab-group *ngIf="typeAccess.action == 'home'">
             <mat-tab label="Conversas"> 
                 <app-list-conversations
@@ -42,49 +69,24 @@
                     (eventShowChat)="showChat($event)">
                 </app-list-users>
             </mat-tab>
-            
-            <mat-tab disabled class="tab-chat-global">
+            <mat-tab>
                 <ng-template mat-tab-label="Chat Global">
-                    <button mat-button (click)="accessAction('chat-global')">
+                    <button mat-button (click)="setAction('chat-global')">
                         <mat-label><b>Chat Global</b></mat-label>
                     </button>
                 </ng-template>
             </mat-tab>
         </mat-tab-group>
-
+        <!-- SHOW-CHAT-GERAL -->
         <app-chat-global *ngIf="typeAccess.action == 'chat-global'"
             [typeAccess]="typeAccess"
-            (eventReturnHome)="accessAction($event)">
+            (eventReturnHome)="setAction($event)">
         </app-chat-global>
-
+        <!-- SHOW CHAT FROM TALK USER- -->
         <app-chat  *ngIf="typeAccess.action == 'chat'"
             [typeAccess]="typeAccess"
             [userConversation]="userConversation"
-            (eventReturnHome)="accessAction($event)">
+            (eventReturnHome)="setAction($event)">
         </app-chat>
     </div>
 </div>
-
-<!-- <div class="container">
-    <div class="row">
-        <div class="col-9">
-        <mat-tab-group>
-            <mat-tab label="Conversas"> 
-                <app-list-conversations
-                    [typeAccess]="typeAccess"></app-list-conversations>
-            </mat-tab>
-            <mat-tab label="Usuários"> 
-                <app-list-users
-                    [typeAccess]="typeAccess"></app-list-users>
-            </mat-tab>
-        </mat-tab-group>
-        </div>
-        <div class="col-3">
-            <div class="menu-item">
-                <div class="menu-mobile"></div>
-                <div class="menu-mobile"></div>
-                <div class="menu-mobile"></div>
-            </div>
-        </div>
-    </div>
-</div> -->

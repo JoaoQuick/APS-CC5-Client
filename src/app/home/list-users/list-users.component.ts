@@ -14,6 +14,7 @@ export class ListUsersComponent implements OnInit {
 
   users: Array<User>;
   heightScroll: number;
+  profile_photo_default: string = 'https://firebasestorage.googleapis.com/v0/b/aps-cc5-communication.appspot.com/o/system%2FpersonIcon.png?alt=media&token=54455364-9642-423a-bcdf-2335bb03c5f1'
   @Input() typeAccess: {
     type: string,
     action?: string
@@ -31,9 +32,17 @@ export class ListUsersComponent implements OnInit {
     this.onResize('');
   }
 
+  checkIfExist(user: User): boolean {
+    if (user.profile_photo == '') 
+      return true;
+    return false;
+  }
+
   getUsers() {
     this._fb.getUsers().subscribe(
-      users => this.users = users
+      users => {
+        this.users = users
+      }
     )
   }
 

@@ -54,14 +54,37 @@
     }
 
     .title-login {
-        text-align: center;
         font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        padding: 0 30px;
     }
 
     .icon-return {
-        background-image: url('../doc/gtkgobackltr_104397.png');
-        background-size: cover;
+        font-size: 2.1em;
     }
+
+    .header-register {
+        flex-direction: row;
+        display: flex;
+        justify-content: flex-start;
+    }
+}
+
+.register-button {
+    margin-left: 20%;
+    margin-top: 2%;
+    margin-right: 20%;
+    background-color: #678299;
+    width: 60%;
+    text-align: center;
+}
+
+.register-button-mobile {
+    margin-left: 5%;
+    margin-top: 2%;
+    margin-right: 5%;
+    background-color: #678299;
+    width: 90%;
+    text-align: center;
 }
 
 .card-register-mobile {
@@ -77,34 +100,39 @@
 
     .title-login {
         font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-        font-size: 4vw;
-        display: flex;
-        align-items: center;
-        margin-left: 3%;
+        font-size: 6vw;
+        text-align: center;
+        padding: 0 20px;
+    }
 
+    .header-register {
+        flex-direction: row;
+        display: flex;
+        justify-content: flex-start;
     }
 
     .icon-return {
         float: left;
-        font-size: 2.5em;
-        margin-right: 10%;
+        font-size: 2.1em;
         position: relative;
     }
 }
 .alert {
-    z-index: 1;
-    margin-left: 10%;
-    margin-right: 10%;
+    z-index: 10;
+    margin-left: 20%;
+    margin-right: 20%;
+    width: 60%;
     text-align: center;
     transition: opacity 0.5s;
-    position: relative;
+    position: absolute;
+    top: 0
 }
 
 .alert.mobile {
-    z-index: 1;
+    z-index: 10;
     text-align: center;
     transition: opacity 0.5s;
-    position: relative;
+    position: fixed;
 }
 
 .spinner {
@@ -112,4 +140,47 @@
     margin-top: 3%;
     size: 10px;
     padding: 12px;
+}
+
+
+.header-image {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 15px;
+    img {
+        border-radius: 50%;
+        width: 200px;
+        height: 200px;
+        margin-top: 15px;
+        margin-bottom: 15px;
+    }
+
+    .button-add-image {
+        border-radius: 10%;
+        width: 20%;
+    }
+
+    .upload-btn-wrapper {
+        position: relative;
+        overflow: hidden;
+        display: inline-block;
+      }
+      
+      .btn {
+        border: 2px solid gray;
+        color: gray;
+        background-color: white;
+        padding: 8px 20px;
+        border-radius: 8px;
+        font-size: 20px;
+        font-weight: bold;
+      }
+      
+      .upload-btn-wrapper input[type=file] {
+        font-size: 100px;
+        position: absolute;
+        left: 0;
+        top: 0;
+        opacity: 0;
+      }
 }

@@ -19,7 +19,8 @@ export class ListConversationsComponent implements OnInit {
     action?: string
   };
   @Output() eventShowChat = new EventEmitter<{user: RegisterConversation, action: string}>();
-
+  profile_photo_default: string = 'https://firebasestorage.googleapis.com/v0/b/aps-cc5-communication.appspot.com/o/system%2FpersonIcon.png?alt=media&token=54455364-9642-423a-bcdf-2335bb03c5f1'
+  
   constructor(
     private _fb: FirebaseService,
     private _eventComunication: EventsCommunicationsService,

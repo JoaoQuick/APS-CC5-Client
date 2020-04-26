@@ -11,13 +11,14 @@ export class ConstantsService {
     private router: Router
   ) { }
 
-  private url: string = '';
-  private user: User;
-  // private user: User = {
-  //   email: 'joaovitor-15@live.com',
-  //   nickname: 'João Vitor',
-  //   token: "eyJwYXNzd29yZCI6InJvb3QxMiIsImVtYWlsIjoiam9hb3ZpdG9yLTE1QGxpdmUuY29tIn0"
-  // };
+  private url: string = 'https://f6ee6783.ngrok.io';
+  // private user: User;
+  private user: User = {
+    email: 'joaovitor-15@live.com',
+    nickname: 'João Vitor',
+    token: "eyJwYXNzd29yZCI6InJvb3QxMiIsImVtYWlsIjoiam9hb3ZpdG9yLTE1QGxpdmUuY29tIn0",
+    profile_photo: 'https://firebasestorage.googleapis.com/v0/b/aps-cc5-communication.appspot.com/o/profile_photo%2Fdownload.jpg-1587777183632?alt=media&token=83668791-49e3-4a4b-8240-9848da66d08f'
+  };
 
   ngOnInit() {
   }
@@ -42,7 +43,7 @@ export class ConstantsService {
     return this.user;
   }
 
-  setUser(user: User) {
+  setUser(user: any) {
     this.user = user;
   }
 }

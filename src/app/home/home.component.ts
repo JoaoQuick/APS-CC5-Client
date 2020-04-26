@@ -1,9 +1,7 @@
-import { Component, OnInit, HostListener } from '@angular/core';
-import { ConstantsService }  from '../services/constants.service';
-import { FirebaseService }  from '../services/firebase.service';
-import { RegisterConversation } from '../interface/registerConversation';
-import { EventsCommunicationsService }  from '../services/events-communications.service';
-import { User } from '../interface/user';
+import { Component, OnInit, HostListener }  from '@angular/core';
+import { ConstantsService }                 from '../services/constants.service';
+import { User }                             from '../interface/user';
+import { Router }                           from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -14,24 +12,21 @@ export class HomeComponent implements OnInit {
 
   initComponent: boolean;
   heightScroll: number;
-  typeAccess: {
-    type: string,
-    action?: string
-  } = {
-    type: 'default'
-  };
+  typeAccess: { type: string, action?: string } = { type: 'default' };
   userConversation: {user: any, action: string};
-  
+  user: User;
+  profile_photo_default: string = 'https://firebasestorage.googleapis.com/v0/b/aps-cc5-communication.appspot.com/o/system%2FpersonIcon.png?alt=media&token=54455364-9642-423a-bcdf-2335bb03c5f1';
 
   constructor(
     private _ConstantsService: ConstantsService,
-    private _eventComunication: EventsCommunicationsService,
+    private router: Router,
   ) { 
     this.initComponent = this._ConstantsService.ckeckUser();
   }
 
   ngOnInit() {
     this.onResize('');
+    this.user = this._ConstantsService.getUser();
   }
 
   @HostListener('window:resize', ['$event'])
@@ -48,12 +43,19 @@ export class HomeComponent implements OnInit {
     else this.typeAccess.type = 'default';
   }
 
-  accessAction(action: string) {
+  setAction(action: string) {
     this.typeAccess.action = action;
   }
 
   showChat(openChat: {user: any, action: string}) {
     this.userConversation = openChat; 
     this.typeAccess.action = 'chat';
+  }
+
+  close() {
+    this._ConstantsService.setUser(undefined);
+    setTimeout(() => {
+      this.router.navigate(['/login'])
+    }, 500);
   }
 }

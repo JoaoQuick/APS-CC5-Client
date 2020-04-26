@@ -2,7 +2,15 @@
     <cdk-virtual-scroll-viewport [ngStyle]="{'height.px': heightScroll}" [itemSize]="25" class="scroll">
         <div *ngFor="let register of registerConversations; let i = index">
             <div class="list-users" type="button" (click)="selectUsers(register)" *ngIf="register.last_conversation_at != 'pending'">
-                <img mat-card-avatar class="example-header-image">
+                <!-- <img mat-card-avatar class="example-header-image"> -->
+                <div mat-card-avatar class="example-header-image" 
+                    *ngIf="register.profile_photo == ''" 
+                    [ngStyle]="{'background-image': 'url(' + profile_photo_default + ')'}">
+                </div>
+                <div mat-card-avatar class="example-header-image" 
+                    *ngIf="register.profile_photo != ''" 
+                    [ngStyle]="{'background-image': 'url(' + register.profile_photo + ')'}">
+                </div>
                 <mat-card-title *ngIf="register.viewed" [matBadge]="register.messages_sent" matBadgeColor="warn">{{register.nickname}}</mat-card-title>
                 <mat-card-title *ngIf="!register.viewed">{{register.nickname}}</mat-card-title>
                 <mat-card-subtitle>{{register.user}}</mat-card-subtitle>

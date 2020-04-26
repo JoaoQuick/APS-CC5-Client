@@ -1,9 +1,8 @@
-import { Injectable } from '@angular/core';
-import { User } from  '../interface/user';
-import { HttpClient, HttpParams, HttpHandler, HttpHeaders } from '@angular/common/http';
-import { Observable, Subscriber } from 'rxjs';
-import { ConstantsService } from '../services/constants.service';
-import { Messaging } from '../interface/messagin';
+import { Injectable }                   from '@angular/core';
+import { User }                         from  '../interface/user';
+import { HttpClient, HttpHeaders }      from '@angular/common/http';
+import { Observable }                   from 'rxjs';
+import { ConstantsService }             from '../services/constants.service';
 
 @Injectable({
   providedIn: 'root'
@@ -21,31 +20,20 @@ export class UsersHttpService {
         this._http.get(url).subscribe(
           response => subscriber.next(response as Array<string>),
           (error) => subscriber.next(error)           
-        )
+        );
       }
-    )
+    );
   };
 
   registerUser(user: User): Observable<{status: string, token: string}> {
+    if (user.profile_photo == '')
+      user.profile_photo = 'https://firebasestorage.googleapis.com/v0/b/aps-cc5-communication.appspot.com/o/profile_photo%2FpersonIcon.png-1587776041416?alt=media&token=6e0fec70-b0f6-4b4f-852c-b5cab2c5cbfc' 
     return new Observable<{status: string, token: string}>(subscriber => {
-      const url = this._ConstantsService.getUrl() + '/user' 
+      const url = this._ConstantsService.getUrl() + '/user';
       this._http.post(url, user).subscribe(
         response => subscriber.next(response as {status: string, token: string}),
-        erro => subscriber.next(erro as {status: string, token: string})
-      );
-    });
-  }
-
-  checkUserAuthentication(user: User): Observable<string> {
-    return new Observable<string>(subscribe => {
-      const url = this._ConstantsService.getUrl() + '/user-access';
-      const ckeckUser = new HttpHeaders({
-        'email': user.email,
-        'password': user.password
-      });
-      this._http.get(url, {headers: ckeckUser}).subscribe(
-        response => subscribe.next(response as string),
-        erro => subscribe.next(erro)
+        erro => subscriber.next(erro as {status: string, token: string}),
+        () => subscriber.complete()
       );
     });
   }
@@ -61,7 +49,8 @@ export class UsersHttpService {
       })
       this._http.get(url, {headers: users}).subscribe(
         response => subscriber.next(response),
-        error => subscriber.next(error)
+        error => subscriber.next(error),
+        () => subscriber.complete()
       );
     });
   }

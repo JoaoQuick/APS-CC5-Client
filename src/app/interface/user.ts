@@ -4,4 +4,5 @@ export class User {
     email?: string;
     token?: string;
     phone?: string;
+    profile_photo?: string;
 }

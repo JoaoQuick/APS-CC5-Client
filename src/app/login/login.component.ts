@@ -4,6 +4,7 @@ import { User }                   from '../interface/user';
 import { ConstantsService }       from '../services/constants.service';
 import { FirebaseService }       from '../services/firebase.service';
 import { Router }                 from '@angular/router';
+import { firestore } from 'firebase';
 import 'firebase/firestore';
 
 @Component({
@@ -21,9 +22,11 @@ export class LoginComponent implements OnInit {
     "password": '',
     "nickname": '',
     "email": '',
-    "phone": ''
+    "phone": '',
+    "profile_photo": ''
   };
   alert: Object = {};
+  textButtonProfile_photo: string = 'Selecione uma foto de perfil';
   loginOrAccess: boolean = true;
   showSpinner: boolean = false;
   typeAccess: {
@@ -48,6 +51,25 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  selectedFile(event) {
+    if (this.textButtonProfile_photo == 'Selecione uma foto de perfil') {
+      const file = event.target.files[0];
+      const name = event.target.files[0]['name'];
+      this._fb.uploadFile(file, 'profile_photo/' + name + '-' + Date.now()).subscribe(
+        url => {
+          this.registerUser.profile_photo = url
+          this.textButtonProfile_photo = 'Remover foto'
+        },
+        error => console.log(error)
+      )
+    }
+    else {
+      this.registerUser.profile_photo = ''
+      this.textButtonProfile_photo = 'Selecione uma foto de perfil'
+    }
+  }
+  
+
   
   userAccess() {
     this.showSpinner = true;
@@ -62,7 +84,7 @@ export class LoginComponent implements OnInit {
         if (response['error'])
           this.showAlert(response['error'], 'alert-danger', this.registerUser['email'], 'error');
       },
-      error => {
+      () => {
         this.showSpinner = false;
         this.showAlert('Ocorreu um erro ao acessar o servidor', 'alert-danger');
       }

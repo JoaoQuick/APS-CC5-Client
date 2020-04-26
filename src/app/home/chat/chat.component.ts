@@ -7,7 +7,6 @@ import { EventsCommunicationsService }         from '../../services/events-commu
 import { UsersHttpService }                    from '../../services/users-http.service';
 import { CdkVirtualScrollViewport }            from '@angular/cdk/scrolling';
 import { ConstantsService }                    from '../../services/constants.service';
-import { RegisterConversation }                from '../../interface/registerConversation';
 
 @Component({
   selector: 'app-chat',
@@ -24,6 +23,7 @@ export class ChatComponent implements OnInit {
     this.getUserToConversation();
     this.getUserToConversationExistent()
   }
+  messages_sent: number;
   chatSubscriber: any;
   messaging: string;
   chatToken: string;
@@ -33,6 +33,7 @@ export class ChatComponent implements OnInit {
   heightScroll: number;
   showSpinner: boolean = true;
   @Input() typeAccess: {type: string, action?: string};
+  profile_photo_default: string = 'https://firebasestorage.googleapis.com/v0/b/aps-cc5-communication.appspot.com/o/system%2FpersonIcon.png?alt=media&token=54455364-9642-423a-bcdf-2335bb03c5f1'
   @Input() userConversation: {user: any, action: string};
   @ViewChild(CdkVirtualScrollViewport, {static: false}) viewport: CdkVirtualScrollViewport;
   @Output() eventReturnHome = new EventEmitter<string>();
@@ -59,8 +60,10 @@ export class ChatComponent implements OnInit {
       if (this.userConversation.action == 'conversations') {
         this.msgs = undefined;
         this.chatToUsers = {
-          nickname: this.userConversation.user['nickname'], email: this.userConversation.user['user'],
-          token: this.userConversation.user['uid_user']
+          nickname: this.userConversation.user['nickname'], 
+          email: this.userConversation.user['user'],
+          token: this.userConversation.user['uid_user'], 
+          profile_photo: this.userConversation.user['profile_photo']
         }
         this.chatToken = this.userConversation.user['chat'];
         this.messagingChat();
@@ -103,7 +106,6 @@ export class ChatComponent implements OnInit {
       else {
         this._db.removeNotifyMessageSending(this.chatToUsers.token.split('.')[1]);
       }
-        
     }
   }
 
@@ -133,10 +135,13 @@ export class ChatComponent implements OnInit {
       register => {
         this.msgs = undefined;
         this.chatToUsers = {
-          nickname: register['nickname'], email: register['user'],
-          token: register['uid_user']
+          nickname: register['nickname'], 
+          email: register['user'],
+          token: register['uid_user'],
+          profile_photo: register['profile_photo']
         }
         this.chatToken = register['chat'];
+        this.messages_sent = register['messages_sent']
         this.messagingChat();
       });            
   }

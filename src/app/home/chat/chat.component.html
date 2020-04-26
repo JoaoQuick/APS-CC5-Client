@@ -3,7 +3,14 @@
 <!-- Cabeçalho -->
 <mat-card class="card-headers" *ngIf="chatToUsers"> 
   <mat-card-header>
-    <div mat-card-avatar class="header-image-user"></div>
+    <div mat-card-avatar class="example-header-image" 
+      *ngIf="chatToUsers.profile_photo == ''" 
+      [ngStyle]="{'background-image': 'url(' + profile_photo_default + ')'}">
+    </div>
+    <div mat-card-avatar class="example-header-image" 
+      *ngIf="chatToUsers.profile_photo != ''" 
+      [ngStyle]="{'background-image': 'url(' + chatToUsers.profile_photo + ')'}">
+    </div>
     <h5 class="title-chat">{{chatToUsers.nickname}}</h5>
     <mat-icon type="button" (click)="detroyChat()" class="icon">cancel</mat-icon>
   </mat-card-header>

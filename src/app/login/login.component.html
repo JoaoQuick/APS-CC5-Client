@@ -19,18 +19,28 @@
 
     <button mat-button (click)="userAccess()">Entrar</button>
 </mat-card>
+<button mat-button (click)="register()" *ngIf="loginOrAccess"
+    [ngClass]="typeAccess.type === 'mobile' ? 'register-button-mobile' : 'register-button'">Criar uma conta</button>
 
-<mat-card 
+<mat-card *ngIf="!loginOrAccess"
     [ngClass]="typeAccess.type === 'mobile' ? 'card-register-mobile' : 'card-register'">
-    <!-- class="card-register" -->
-    <div *ngIf="!loginOrAccess">
-        
-        <mat-card-header>
-            <!-- <div mat-card-avatar class="icon-return" type="button" (click)="register('true')"></div> -->
+        <div class="header-register">
             <mat-icon class="icon-return" type="button" (click)="register('true')">arrow_back</mat-icon>
             <h3 class="title-login">Preencha os dados para cadastrar-se</h3>
-        </mat-card-header>
+        </div>
         <hr/>
+
+        <div class="header-image">
+            <img [src]="registerUser.profile_photo || 'https://firebasestorage.googleapis.com/v0/b/aps-cc5-communication.appspot.com/o/profile_photo%2FpersonIcon.png-1587776041416?alt=media&token=6e0fec70-b0f6-4b4f-852c-b5cab2c5cbfc'"><br/>
+            <!-- <button mat-button accept="image/*" type="file" class="button-add-image" (change)="profile_photo($event)">Selecione a foto de perfil</button> -->
+            <div class="upload-btn-wrapper" *ngIf="textButtonProfile_photo == 'Selecione uma foto de perfil'">
+                <button class="btn">{{textButtonProfile_photo}}</button>
+                <input type="file" (change)="selectedFile($event)" accept="image/*"/>
+            </div>
+            <div class="upload-btn-wrapper" *ngIf="textButtonProfile_photo != 'Selecione uma foto de perfil'">
+                <button class="btn" (click)="selectedFile('')">{{textButtonProfile_photo}}</button>
+            </div>
+        </div>
         <mat-form-field style="width: 100%;" appearance="fill" >
             <mat-label>Email</mat-label>
             <input matInput [(ngModel)]="registerUser.email">
@@ -50,11 +60,9 @@
             <mat-label>Telefone</mat-label>
             <input matInput [(ngModel)]="registerUser.phone">
         </mat-form-field><br/>
-    </div>
-    <button mat-button (click)="register()">Registrar-se</button>
+    
+        <button mat-button (click)="register()">Registrar-se</button>
 </mat-card>    
 
 <mat-spinner class="spinner" *ngIf="showSpinner"
     mode="indeterminate" diameter="40"></mat-spinner>
-
-    <!-- [ngClass]="{'card-msg': msgs[i].email != myUser.email, 'card-msg-my-user': msgs[i].email == myUser.email}" -->
