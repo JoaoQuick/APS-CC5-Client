@@ -4,14 +4,14 @@ import { FormsModule,
         ReactiveFormsModule }       from '@angular/forms';
 import { AppRoutingModule }         from './app-routing.module';
 import { AppComponent }             from './app.component';
-import { HomeComponent }            from './home/home.component';
-import { ChatComponent }            from './home/chat/chat.component';
-import { ChatGlobalComponent }      from './home/chat-global/chat-global.component';
-import { ConfigComponent }          from './config/config.component';
-import { ListUsersComponent }       from './home/list-users/list-users.component';
+import { HomeComponent }            from '../component/home/home.component';
+import { ChatComponent }            from '../component/home/chat/chat.component';
+import { ChatGlobalComponent }      from '../component/home/chat-global/chat-global.component';
+import { ConfigComponent }          from '../component/config/config.component';
+import { ListUsersComponent }       from '../component/home/list-users/list-users.component';
 import { 
-      ListConversationsComponent }  from './home/list-conversations/list-conversations.component';
-
+      ListConversationsComponent }  from '../component/home/list-conversations/list-conversations.component';
+import { ProfileComponent }         from '../component/profile/profile.component';
 import { RouterModule }             from '@angular/router';
 import { HttpClientModule }         from '@angular/common/http';
 // Firebase
@@ -26,22 +26,23 @@ import { MatFormFieldModule }       from '@angular/material/form-field';
 import { MatInputModule }           from '@angular/material/input';
 import { MatAutocompleteModule }    from '@angular/material/autocomplete';
 import { MatSelectModule }          from '@angular/material/select';
+import { MatDialogModule }          from '@angular/material/dialog';
 import { MatGridListModule }        from '@angular/material/grid-list';
 import { MatSidenavModule }         from '@angular/material/sidenav';
 import { MatBadgeModule }           from '@angular/material/badge';
 import { MatCardModule }            from '@angular/material/card';
 import { MatButtonModule }          from '@angular/material/button';
-import { LoginComponent }           from './login/login.component';
+import { LoginComponent }           from '../component/login/login.component';
 import { MatListModule }            from '@angular/material/list';
 import { MatIconModule }            from '@angular/material/icon';
-import {MatMenuModule}              from '@angular/material/menu';
+import { MatToolbarModule }         from '@angular/material/toolbar'
+import { MatMenuModule }            from '@angular/material/menu';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { CdkTableModule }           from '@angular/cdk/table';
 import { MatTableModule }           from '@angular/material/table';
 import { MatTabsModule }            from '@angular/material/tabs';
 import { ScrollingModule }          from '@angular/cdk/scrolling';
 import { TableVirtualScrollModule } from 'ng-table-virtual-scroll';
-import { ProfileComponent } from './profile/profile.component';
 
 const root = [
   { path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -82,8 +83,10 @@ const root = [
     MatAutocompleteModule,
     MatMenuModule,
     MatGridListModule,
+    MatToolbarModule,
     MatSelectModule,
     MatCardModule,
+    MatDialogModule,
     ScrollingModule,
     MatButtonModule,
     MatTableModule,
@@ -94,6 +97,9 @@ const root = [
     AngularFireStorageModule, 
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [
+    ProfileComponent
+  ],
 })
 export class AppModule { }

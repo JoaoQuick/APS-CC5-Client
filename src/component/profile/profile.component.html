@@ -1,0 +1,49 @@
+<div class="header-image">
+    <img [src]="user.profile_photo || 'https://firebasestorage.googleapis.com/v0/b/aps-cc5-communication.appspot.com/o/profile_photo%2FpersonIcon.png-1587776041416?alt=media&token=6e0fec70-b0f6-4b4f-852c-b5cab2c5cbfc'"><br/>
+    <div class="upload-btn-wrapper" *ngIf="textButtonProfile_photo != 'Remover foto'">
+        <button class="btn">{{textButtonProfile_photo}}</button>
+        <input type="file" (change)="selectedFile($event)" accept="image/*"/>
+    </div>
+    <div class="upload-btn-wrapper" *ngIf="textButtonProfile_photo == 'Remover foto'">
+        <button class="btn" (click)="selectedFile('')">{{textButtonProfile_photo}}</button>
+    </div>
+
+    <mat-form-field style="width: 100%;" appearance="fill" >
+        <mat-label>Email</mat-label>
+        <input matInput [(ngModel)]="user.email" disabled>
+    </mat-form-field><br/>
+
+    <mat-form-field style="width: 100%;" appearance="fill">
+        <mat-label>Senha</mat-label>
+        <input matInput [(ngModel)]="user.password" type="password">
+    </mat-form-field><br/>
+
+    <mat-form-field style="width: 100%;" appearance="fill" *ngIf="user.password != ''">
+        <mat-label>Digite a senha novamente</mat-label>
+        <input matInput [(ngModel)]="password" type="password">
+        <mat-hint style="color: red;" *ngIf="password && password != user.password">
+            Confirmação de senha <strong>invalida!</strong>
+        </mat-hint>
+    </mat-form-field><br/>
+
+    <mat-form-field style="width: 48%;" appearance="fill">
+        <mat-label>Nome</mat-label>
+        <input matInput [(ngModel)]="user.nickname">
+    </mat-form-field>
+
+    <mat-form-field style="width: 48%; margin-left: 4%;" appearance="fill">
+        <mat-label>Telefone</mat-label>
+        <input matInput [(ngModel)]="user.phone">
+    </mat-form-field><br/>
+
+    <button mat-button (click)="onNoClick()">Voltar</button>
+    <button mat-button (click)="updateUser()">Salvar</button>
+    <br/><br/>
+    
+    <mat-spinner class="spinner" *ngIf="showSpinner" 
+        mode="indeterminate" diameter="40">
+    </mat-spinner>
+    <strong *ngIf="alert"  style="text-align: center;">
+        {{alert.msg}}
+    </strong> 
+</div>

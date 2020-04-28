@@ -1,0 +1,16 @@
+<div *ngIf="users"> 
+    <cdk-virtual-scroll-viewport [ngStyle]="{'height.px': heightScroll}" 
+        [itemSize]="50" class="scroll">
+        <div *ngFor="let user of users; let i = index" class="list-users">
+            <mat-card type="button" (click)="selectUsers(user)" class="card-users">
+                <mat-card-header>
+                    <div mat-card-avatar class="example-header-image" 
+                        *ngIf="user.profile_photo != ''" 
+                        [ngStyle]="{'background-image': 'url(' + user.profile_photo + ')'}">
+                    </div>
+                    <p>{{user.nickname}}</p>
+                </mat-card-header>
+            </mat-card>
+        </div>
+    </cdk-virtual-scroll-viewport>
+</div>

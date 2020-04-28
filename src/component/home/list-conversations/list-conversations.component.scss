@@ -1,0 +1,23 @@
+.scroll {
+    margin-top: 2%;
+    margin-bottom: 5%;
+
+    mat-card-title {
+        font-size: 20px;
+    }
+
+    .list-users {
+        margin-top: 5%;
+    }
+
+    .example-header-image {
+        background-size: cover;
+        float: left;
+        margin-right: 10px;
+        border: transparent thin solid;
+    }
+    mat-card-title {
+        width: 80%;
+    }
+}
+
