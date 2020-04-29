@@ -81,13 +81,46 @@
         <!-- SHOW-CHAT-GERAL -->
         <app-chat-global *ngIf="typeAccess.action == 'chat-global'"
             [typeAccess]="typeAccess"
-            (eventReturnHome)="setAction($event)">
+            (eventReturn)="setAction($event)">
         </app-chat-global>
         <!-- SHOW CHAT FROM TALK USER- -->
         <app-chat  *ngIf="typeAccess.action == 'chat'"
             [typeAccess]="typeAccess"
             [userConversation]="userConversation"
-            (eventReturnHome)="setAction($event)">
+            (eventReturn)="setAction($event)">
         </app-chat>
+    </div>
+
+     <!-- TABLET WEB ACCESS -->
+     <div class="row" *ngIf="typeAccess.type == 'tablet'">
+        <!-- MENU-OPTIONS -->
+        <div class="col-sm-5">
+            <mat-tab-group>
+                <mat-tab label="Conversas"> 
+                    <app-list-conversations
+                        [typeAccess]="typeAccess"
+                        (eventShowChat)="showChat($event)">
+                    </app-list-conversations>
+                </mat-tab>
+                <mat-tab label="Usuários"> 
+                    <app-list-users
+                        [typeAccess]="typeAccess"
+                        (eventShowChat)="showChat($event)">
+                    </app-list-users>
+                </mat-tab>
+            </mat-tab-group>
+        </div>
+        <div class="col-sm-7">
+            <!-- SHOW-CHAT-GERAL -->
+            <app-chat-global *ngIf="typeAccess.action == 'chat-global'"
+                [typeAccess]="typeAccess">
+            </app-chat-global>
+            <!-- SHOW CHAT FROM TALK USER- -->
+            <app-chat *ngIf="typeAccess.action == 'chat'"
+                [typeAccess]="typeAccess"
+                [userConversation]="userConversation"
+                (eventReturn)="setAction($event)">
+            </app-chat>
+        </div>  
     </div>
 </div>

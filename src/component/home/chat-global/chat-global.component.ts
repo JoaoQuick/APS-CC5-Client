@@ -57,32 +57,8 @@ export class ChatGlobalComponent implements OnInit {
   @HostListener('window:resize', ['$event'])
   onResize(event) {
     this.heightScroll = this.ajusteSize(window.innerHeight, 0.70);
-    // this.heightHeaders = this.ajusteSize2(window.innerHeight, 0.08);
   }
 
-  // ajusteSize(height) {
-  //   if (height >= 0 && height <= 524)
-  //     return height * 0.55;
-  //   if (height >= 525 && height <= 594)
-  //     return height * 0.58;
-  //   if (height >= 0 && height <= 594)
-  //     return height * 0.58;
-  //   if (height >= 595 && height <= 649)
-  //     return height * 0.62;
-  //   if (height >= 650 && height <= 693)
-  //     return height * 0.65;
-  //   if (height >= 694 && height <= 775)
-  //     return height * 0.668;
-  //   if (height >= 776 && height <= 797)
-  //     return height * 0.69;
-  //   if (height >= 798 && height <= 900)
-  //     return height * 0.695;
-  //   if (height > 900 && height < 1000)
-  //     return height * 0.71;
-  //   if (height >= 1000)
-  //     return height * 0.73;
-  //   else return height * 0.70;
-  // }
   ajusteSize(height: number, percentage?: number) {
     if (this.typeAccess['type'] == 'mobile') {
       return height * 0.67

@@ -50,7 +50,7 @@ export class ListConversationsComponent implements OnInit {
   }
 
   selectUsers(register: RegisterConversation ) {
-    if (this.typeAccess.type == 'mobile')
+    if (this.typeAccess.type == 'mobile' || this.typeAccess.type == 'tablet')
       this.eventShowChat.emit({user: register, action: 'conversations'});
     if (this.typeAccess.type == 'default')
       this._eventComunication.initConversationUser.emit(register);

@@ -38,7 +38,7 @@ export class ChatComponent implements OnInit {
   profile_photo_default: string = 'https://firebasestorage.googleapis.com/v0/b/aps-cc5-communication.appspot.com/o/system%2FpersonIcon.png?alt=media&token=54455364-9642-423a-bcdf-2335bb03c5f1'
   @Input() userConversation: {user: any, action: string};
   @ViewChild(CdkVirtualScrollViewport, {static: false}) viewport: CdkVirtualScrollViewport;
-  @Output() eventReturnHome = new EventEmitter<string>();
+  @Output() eventReturn = new EventEmitter<string>();
 
   ngOnInit() {
     this.myUser = this._ConstantsService.getUser();
@@ -47,7 +47,7 @@ export class ChatComponent implements OnInit {
   } 
 
   setChatTokenIfAccessMobile() {
-    if (this.typeAccess && this.typeAccess.type == 'mobile') {
+    if (this.typeAccess && this.typeAccess.type != 'default') {
       if (this.userConversation.action == 'listUsers') {
         this.msgs = undefined;
         this.chatToUsers = this.userConversation.user;
@@ -159,7 +159,11 @@ export class ChatComponent implements OnInit {
     if (this.typeAccess['type'] == 'mobile') {
       return height * 0.64;
     }
-    if (height >= 0 && height <= 551)
+    else if (this.typeAccess['type'] == 'tablet') {
+      return height * 0.67;
+    }
+    else {
+      if (height >= 0 && height <= 551)
       return height * 0.25;
     if (height >= 551 && height <= 572)
       return height * 0.28;
@@ -183,6 +187,7 @@ export class ChatComponent implements OnInit {
       return height * 0.52;
     if (height >= 1000)
       return height * 0.53;
+    }
   }
  
   ajusteSize2(height: number, percentage: number) {
@@ -194,7 +199,10 @@ export class ChatComponent implements OnInit {
     this.chatToUsers = undefined;
     this.chatSubscriber.unsubscribe()
     if (this.typeAccess && this.typeAccess.type == 'mobile') {
-      this.eventReturnHome.emit('home');
+      this.eventReturn.emit('home');
+    }
+    if (this.typeAccess && this.typeAccess.type == 'tablet') {
+      this.eventReturn.emit('chat-global');
     }
   }
 }

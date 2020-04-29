@@ -1,9 +1,9 @@
-<div class="example-card">
+<div class="example-card" *ngIf="typeAccess.type == 'default'">
 </div>
 <!-- Cabeçalho -->
 <mat-card *ngIf="chatToUsers" 
-  [ngClass]="{'card-headers-mobile': typeAccess.type == 'mobile', 
-  'card-headers': typeAccess.type != 'mobile'}"> 
+  [ngClass]="{'card-headers-mobile': typeAccess.type != 'default', 
+  'card-headers': typeAccess.type == 'default'}"> 
   <mat-card-header>
     <div mat-card-avatar class="example-header-image" 
       *ngIf="chatToUsers.profile_photo == ''" 
@@ -50,7 +50,7 @@
     <!-- Input -->
     <hr/>
     <div class="card" [ngStyle]="{'height.px': sizeTextarea}">
-      <mat-form-field [ngClass]="{'form-chat-mobile': typeAccess.type == 'mobile', 
+      <mat-form-field [ngClass]="{'form-chat-mobile': typeAccess.type != 'default', 
         'form-chat': typeAccess.type != 'mobile'}">
         <mat-label>Mensagem</mat-label>
           <textarea matInput class="textarea-global" [(ngModel)]="messaging" 

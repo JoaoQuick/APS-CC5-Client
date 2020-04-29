@@ -60,21 +60,27 @@ export class HomeComponent implements OnInit {
   }
   
   configTela(width: number, height: number) {
-    if (width <= 575) {
-      if (this.typeAccess.type == 'default') {
+    if (width <= 470) {
+      if (this.typeAccess.type != 'mobile') {
         this.typeAccess = {type: 'mobile', action: 'home'};
+      }
+    }
+    else if (width <= 850) {
+      if (this.typeAccess.type != 'tablet') {
+        this.typeAccess = {type: 'tablet', action: 'chat-global'};
       }
     }
     else this.typeAccess.type = 'default';
     this.sizePhoto = height * 0.065
+    console.log(this.typeAccess)
   }
 
   setAction(action: string) {
     this.typeAccess.action = action;
   }
 
-  showChat(openChat: {user: any, action: string}) {
-    this.userConversation = openChat; 
+  showChat(UsersConversations: {user: any, action: string}) {
+    this.userConversation = UsersConversations; 
     this.typeAccess.action = 'chat';
   }
 
