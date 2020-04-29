@@ -7,7 +7,6 @@ import { AppComponent }             from './app.component';
 import { HomeComponent }            from '../component/home/home.component';
 import { ChatComponent }            from '../component/home/chat/chat.component';
 import { ChatGlobalComponent }      from '../component/home/chat-global/chat-global.component';
-import { ConfigComponent }          from '../component/config/config.component';
 import { ListUsersComponent }       from '../component/home/list-users/list-users.component';
 import { 
       ListConversationsComponent }  from '../component/home/list-conversations/list-conversations.component';
@@ -48,7 +47,6 @@ const root = [
   { path: '', redirectTo: '/home', pathMatch: 'full'},
   { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'api-config', component: ConfigComponent },
 ]
 
 @NgModule({
@@ -58,7 +56,6 @@ const root = [
     LoginComponent,
     ChatComponent,
     ChatGlobalComponent,
-    ConfigComponent,
     ListUsersComponent,
     ListConversationsComponent,
     ProfileComponent

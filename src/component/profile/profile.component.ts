@@ -13,7 +13,7 @@ import { Router }                 from '@angular/router';
 })
 export class ProfileComponent implements OnInit {
 
-  alert: Object = false;
+  alert: any = false;
   textButtonProfile_photo: string = 'Remover foto';
   password: string;
   showSpinner: boolean = false;

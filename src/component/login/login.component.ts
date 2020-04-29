@@ -25,16 +25,11 @@ export class LoginComponent implements OnInit {
     "phone": '',
     "profile_photo": ''
   };
-  alert: Object = {};
+  alert: any = {};
   textButtonProfile_photo: string = 'Selecione uma foto de perfil';
   loginOrAccess: boolean = true;
   showSpinner: boolean = false;
-  typeAccess: {
-    type: string,
-    action?: string
-  } = {
-    type: 'default'
-  };
+  typeAccess: any = { type: 'default'};
 
   constructor(
     private _users: UsersHttpService,
