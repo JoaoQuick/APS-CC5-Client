@@ -131,18 +131,39 @@
             margin-top: 2px;
             margin-bottom: 2px;
             overflow: auto;
+            width: 72vw;
         }
 
         .mobile-msg {
             word-wrap: break-word;
             margin-top: 2px;
             margin-bottom: 2px;
+            width: 72vw;
+            overflow: auto;
+        }
+
+        .tablet-msg-my-user {
+            text-align: left;
+            color: #fff;
+            word-wrap: break-word;
+            margin-top: 2px;
+            margin-bottom: 2px;
+            overflow: auto;
+            width: 22vmax;
+        }
+
+        .tablet-msg {
+            word-wrap: break-word;
+            margin-top: 2px;
+            margin-bottom: 2px;
+            width: 22vmax;
+            overflow: auto;
         }
 
     }
 
     .card {
-        width: 100%; 
+        height: 10vh; 
         background-color: #afc0c9;
         border-radius: 16px;
     }

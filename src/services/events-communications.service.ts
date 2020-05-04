@@ -10,10 +10,8 @@ export class EventsCommunicationsService {
 
   initConversationToNewUser = new EventEmitter<User>();
   initConversationUser = new EventEmitter<RegisterConversation>();
+  initConversationMobile = new EventEmitter<{user: any, action: string}>();
 
   constructor() { } 
 
-  newConversation(user: User) {
-    this.initConversationToNewUser.emit(user);
-  }
 }

@@ -19,7 +19,7 @@ export class ChatGlobalComponent implements OnInit {
   heightScroll: number;
   // heightHeaders: number;
   showSpinner: boolean = true;
-  @Output() eventReturnHome = new EventEmitter<string>();
+  @Output() eventReturn = new EventEmitter<string>();
   @Input() typeAccess: {type: string, action?: string };
   @ViewChild(CdkVirtualScrollViewport, {static: false}) viewport: CdkVirtualScrollViewport;
 
@@ -35,7 +35,7 @@ export class ChatGlobalComponent implements OnInit {
   }
 
   submitMessaging() {
-    this._fb.setChatGlobal(this.inputMessaging);
+    this._fb.sendMessageToGeneralChat(this.inputMessaging.split('\n').join('<br/>'));
     this.inputMessaging = '';
   }
 
@@ -71,6 +71,6 @@ export class ChatGlobalComponent implements OnInit {
   }
 
   detroyChat(access: string) {
-    this.eventReturnHome.emit(access);
+    this.eventReturn.emit(access);
   }
 }

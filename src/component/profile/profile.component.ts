@@ -45,7 +45,7 @@ export class ProfileComponent implements OnInit {
     if (this.textButtonProfile_photo == 'Selecione uma nova foto de perfil') {
       const file = event.target.files[0];
       const name = event.target.files[0]['name'];
-      this._fb.uploadFile(file, 'profile_photo/' + name + '-' + Date.now()).subscribe(
+      this._fb.uploadProfilePhoto(file, 'profile_photo/' + name + '-' + Date.now()).subscribe(
         url => {
           this.user.profile_photo = url
           this.textButtonProfile_photo = 'Remover foto'

@@ -50,7 +50,7 @@ export class LoginComponent implements OnInit {
     if (this.textButtonProfile_photo == 'Selecione uma foto de perfil') {
       const file = event.target.files[0];
       const name = event.target.files[0]['name'];
-      this._fb.uploadFile(file, 'profile_photo/' + name + '-' + Date.now()).subscribe(
+      this._fb.uploadProfilePhoto(file, 'profile_photo/' + name + '-' + Date.now()).subscribe(
         url => {
           this.registerUser.profile_photo = url
           this.textButtonProfile_photo = 'Remover foto'
@@ -68,7 +68,7 @@ export class LoginComponent implements OnInit {
   
   userAccess() {
     this.showSpinner = true;
-    this._fb.userAccess(this.user['email'], this.user['password']).subscribe(
+    this._fb.login(this.user['email'], this.user['password']).subscribe(
       response => {
         this.showSpinner = false;
         if (response['email'] && response['token']) {
@@ -102,7 +102,7 @@ export class LoginComponent implements OnInit {
         this._users.createUser(this.registerUser).subscribe(
           response => {
             if (response['status'] == 'user created') {
-              this._fb.userAccess(this.registerUser['email'], this.registerUser['password']).subscribe(
+              this._fb.login(this.registerUser['email'], this.registerUser['password']).subscribe(
                 response => {
                   if (response['email'] && response['token']) {
                     this.showSpinner = false;

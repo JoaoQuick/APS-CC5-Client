@@ -21,15 +21,9 @@
                                 <b>{{globalMessaging[i].nickname}}</b>
                             </div>
                             <mat-card-content>
-                                <p *ngIf="typeAccess.type == 'mobile'"
-                                    [ngClass]="{'text-msg-my-user': globalMessaging[i].email == myUser.email, 
-                                    'text-msg': globalMessaging[i].email != myUser.email}">
-                                    {{globalMessaging[i].msg}}
-                                </p>
-                                <p *ngIf="typeAccess.type != 'mobile'"
-                                    [ngClass]="{'text-msg-my-user': globalMessaging[i].email == myUser.email, 
-                                    'text-msg': globalMessaging[i].email != myUser.email}">
-                                    {{globalMessaging[i].msg}}
+                                <p [ngClass]="{'text-msg-my-user': globalMessaging[i].email == myUser.email, 
+                                    'text-msg': globalMessaging[i].email != myUser.email}"
+                                    [innerHTML]="globalMessaging[i].msg">
                                 </p>
                             </mat-card-content>
                         </mat-card>

@@ -21,7 +21,7 @@ export class FirebaseService {
     private _ConstantsService: ConstantsService,
   ) { }
 
-  uploadFile(file, path): Observable<string> {
+  uploadProfilePhoto(file, path): Observable<string> {
     return new Observable<string>(observer => {
         const task = this.storage.upload(path, file);
         task.snapshotChanges().pipe(finalize(() => {
@@ -51,9 +51,9 @@ getDownloadUrl(filePath): Observable<string> {
                 observer.complete();
             });
     });
-}
+  }
 
-  userAccess(email: string, password: string): Observable<User> | Observable<Object> {
+  login(email: string, password: string): Observable<User> | Observable<Object> {
     return new Observable<Object>(subscriber => { 
       auth().signInWithEmailAndPassword(email, password)
       .then(
@@ -98,6 +98,16 @@ getDownloadUrl(filePath): Observable<string> {
         );
       }
     );
+  }
+
+  checkPendingNotification(user_id: string, id_user_two: string): Observable<boolean> {
+    return new Observable<boolean>(subscriber => {
+      this._fb.collection('parameters/conversations_of_users/' + user_id).doc(
+        id_user_two).valueChanges().subscribe(
+          response => subscriber.next((response as RegisterConversation).viewed),
+          error => subscriber.next(error)
+        );
+    });
   }
 
   setConversations(tokenChat: string, msg: string) {
@@ -151,7 +161,7 @@ getDownloadUrl(filePath): Observable<string> {
     );
   }
 
-  setChatGlobal(msg: string) {
+  sendMessageToGeneralChat(msg: string) {
     this._fb.collection('chats/global_KxgIWLs7yQ105bOxpq9j/conversations').doc(
       this._fb.createId()).set({
         email: this._ConstantsService.getUser()['email'],

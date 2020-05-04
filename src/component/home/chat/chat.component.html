@@ -14,13 +14,13 @@
       [ngStyle]="{'background-image': 'url(' + chatToUsers.profile_photo + ')'}">
     </div>
     <h5 class="title-chat">{{chatToUsers.nickname}}</h5>
-    <mat-icon type="button" (click)="detroyChat()" class="icon">cancel</mat-icon>
+    <mat-icon type="button" (click)="returnHomeMobile()" class="icon">cancel</mat-icon>
   </mat-card-header>
 </mat-card>
 
 <mat-card class="card-chat" *ngIf="chatToUsers">
   <!-- Mensagens -->
-    <cdk-virtual-scroll-viewport [ngStyle]="{'height.px': heightScroll}" itemSize="50" class="scroll">
+    <cdk-virtual-scroll-viewport [ngStyle]="{'height': typeAccess.type == 'mobile' ? '64vh' : typeAccess.type == 'tablet'? '67vh' : '48vh'}" itemSize="50" class="scroll">
       
       <mat-spinner class="spinner" *ngIf="msgs == undefined"
         mode="indeterminate" diameter="40"></mat-spinner>
@@ -31,14 +31,9 @@
               <b>{{msgs[i].nickname}}</b>
             </div>
             <mat-card-content>
-                <p *ngIf="typeAccess.type == 'mobile'"
-                  [ngClass]="{'mobile-msg-my-user': msgs[i].email == myUser.email, 'mobile-msg': msgs[i].email != myUser.email}"
-                  [ngStyle]="{'width.px': sizeText}">
-                  {{msgs[i].msg}}
-                </p>
-                <p *ngIf="typeAccess.type != 'mobile'"
-                  [ngClass]="{'text-msg-my-user': msgs[i].email == myUser.email, 'text-msg': msgs[i].email != myUser.email}">
-                  {{msgs[i].msg}}
+                <p 
+                  [ngClass]="{'tablet-msg-my-user': msgs[i].email == myUser.email, 'tablet-msg': msgs[i].email != myUser.email}"
+                  [innerHTML]="msgs[i].msg">
                 </p>
             </mat-card-content>
           </mat-card>
@@ -49,9 +44,9 @@
     </cdk-virtual-scroll-viewport>
     <!-- Input -->
     <hr/>
-    <div class="card" [ngStyle]="{'height.px': sizeTextarea}">
+    <div class="card">
       <mat-form-field [ngClass]="{'form-chat-mobile': typeAccess.type != 'default', 
-        'form-chat': typeAccess.type != 'mobile'}">
+        'form-chat': typeAccess.type == 'default'}">
         <mat-label>Mensagem</mat-label>
           <textarea matInput class="textarea-global" [(ngModel)]="messaging" 
               (keydown.enter)="submitMessaging()"
