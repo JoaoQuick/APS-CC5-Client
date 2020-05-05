@@ -115,18 +115,15 @@ export class ChatComponent implements OnInit, OnDestroy {
         setTimeout(() => {
           this.viewport.scrollToIndex(999999, 'smooth');
         },1)
-        console.log('this.myUser.token, this.chatToUsers.toke')
-        console.log(this.myUser.token)
-        console.log(this.chatToUsers.token)
-        this.removeNotify(this.myUser.token, this.chatToUsers.token)
       }
     );
+    this.removeNotify(this.myUser.token, this.chatToUsers.token);
   }
 
   removeNotify(user_id: string, user_id_two: string) {
-    console.log('removeNotify');
     this.checkPendingNotificationSubscriber = this._fb.checkPendingNotification(user_id, user_id_two).subscribe(
       removeNotify => {
+        console.log('removeNotify')
         console.log(removeNotify)
         if (removeNotify) {
           if (this.chatToUsers.token.split('.')[1] == undefined) {

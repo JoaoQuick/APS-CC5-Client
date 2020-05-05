@@ -104,7 +104,10 @@ getDownloadUrl(filePath): Observable<string> {
     return new Observable<boolean>(subscriber => {
       this._fb.collection('parameters/conversations_of_users/' + user_id).doc(
         id_user_two).valueChanges().subscribe(
-          response => subscriber.next((response as RegisterConversation).viewed),
+          response => {
+            console.log((response as RegisterConversation).viewed)
+            subscriber.next((response as RegisterConversation).viewed)
+          },
           error => subscriber.next(error)
         );
     });
