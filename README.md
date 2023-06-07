@@ -1,4 +1,6 @@
-# ClientAps
+# APS CC5 - CLIENT
+
+- https://aps-cc5-communication.web.app - Login: admin@gmail.com / password: root12
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.21.
 
